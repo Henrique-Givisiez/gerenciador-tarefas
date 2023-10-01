@@ -1,0 +1,55 @@
+
+body {
+    background: linear-gradient(to right, #3378e7, #418ac5, #71bddd ,#92b9d9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}   
+
+.form-fundo {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+.form-resposta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding:10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0);
+  margin-top: 10px;
+}
+.teste {
+  background-color: black;
+}
+.tarefa {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+.tarefa p {
+  margin: 0;
+}
+
+.tarefa button {
+  background-color: rgb(226, 51, 51);
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+form {
+  width: 175px;
+}
