@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, redirect
 from flask_mysqldb import MySQL 
 import MySQLdb.cursors
 import re 
@@ -10,7 +10,7 @@ app.secret_key = 'givisiez'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'Luco@1504'
-app.config['MYSQL_DB'] = 'gerenciador_tarefas_contas'
+app.config['MYSQL_DB'] = 'bd_gerenciador_de_tarefas'
 
 mysql = MySQL(app)
 
@@ -18,12 +18,6 @@ mysql = MySQL(app)
 def home():
     return render_template("registrar.html")
 
-@app.route('/logout') 
-def logout(): 
-    session.pop('loggedin', None) 
-    session.pop('id', None) 
-    session.pop('username', None) 
-    return redirect(url_for('login')) 
 
 @app.route("/login", methods = ['POST','GET'])
 def login():
@@ -40,7 +34,7 @@ def login():
             session['id'] = conta['id'] 
             session['email'] = conta['email'] 
             msg = 'Bem vindo!'
-            return render_template('home.html', msg = msg) 
+            return redirect(url_for('homepage'))
         else: 
             msg_erro = 'Credenciais inválidas, tente novamente!'
     return render_template('login.html', msg_erro = msg_erro) 
@@ -73,9 +67,23 @@ def register():
         msg = 'Por favor, preencha os campos!'
     return render_template('registrar.html', msg=msg)
 
-@app.route("/tarefas")
-def tarefas():
-    return render_template("tarefas.html")
+@app.route("/homepage")
+def homepage():
+    return render_template("home.html")
 
+@app.route("/tarefas", methods =['GET', 'POST'])
+def tarefas():
+    if request.method == 'POST' and 'tarefa' in request.form: 
+        tarefa = request.form['tarefa']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+        cursor.execute('SELECT * FROM tarefas WHERE tarefa = % s', (tarefa, )) 
+        tarefa_bd = cursor.fetchone() 
+        if not tarefa_bd: 
+            cursor.execute('INSERT INTO tarefas VALUES (NULL, % s)', (tarefa, )) 
+            mysql.connection.commit() 
+    return render_template("tarefas.html")
+@app.route("/sobre-mim")
+def sobreMim():
+    return render_template("sobre-mim.html")
 if __name__ == "__main__":
     app.run(debug=True)

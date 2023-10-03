@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas</title>
-    <link rel="stylesheet" type="text/css" href="static/css/style.css">
-</head>
+    <link rel="stylesheet" type="text/css" href="static/css/homepage_style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/tarefas_style.css">
+    <link href="https://fonts.cdnfonts.com/css/catrinity-for-personal-use" rel="stylesheet">                                                          
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  </head>
 
 <body>
-    <h1>Seja bem-vindo!</h1>
-    <h1 style="margin-top: 5px;">Vamos dar uma olhada nas tarefas?</h1>
-    
-    <div class="form-fundo">
-      <form id="task-form">
-        <input type="text" id="task-input" placeholder="Adicionar Tarefa">
-      </form>
+  
+    <div class="div-links">
+      <ul class="nav-links">
+          <li class="link"><a href="homepage">Página Inicial</a></li>
+          <li class="link"><a href="tarefas">Suas Tarefas</a></li>
+          <li class="link"><a href="sobre-mim">Sobre o criador</a></li>
+      </ul>
+  </div class="div-links">
+
+  <form class="form" action="/tarefas"method="POST">
+    <span class="title">Adicione a tarefa</span>
+    <div>
+            <input  placeholder="Adicione a tarefa" name="tarefa">
     </div>
-    
-    <div id="response">
-    </div>  
-    <script src="static/JavaScript/script.js"></script>
-</body>
+    <button type="submit" value="submit">Entrar</button>
+</form>
 </html>
