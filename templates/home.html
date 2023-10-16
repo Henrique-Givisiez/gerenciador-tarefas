@@ -5,15 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas | Homepage</title>
     <link rel="stylesheet" type="text/css" href="static/css/homepage_style.css">
-    <link href="https://fonts.cdnfonts.com/css/catrinity-for-personal-use" rel="stylesheet">                                                          
+    <link href="https://fonts.cdnfonts.com/css/catrinity-for-personal-use" rel="stylesheet">    
+    <link href="https://fonts.cdnfonts.com/css/niramit-2" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">                                      
 </head>
 <body>
-    <div class="div-links">
-    <ul class="nav-links">
-        <li class="link"><a href="homepage">Página Inicial</a></li>
-        <li class="link"><a href="tarefas">Suas Tarefas</a></li>
-        <li class="link"><a href="sobre-mim">Sobre o criador</a></li>
-    </ul>
-</div class="div-links">
+    
+    
+    <div class="corpo">
+        <div class="div-links">
+            <ul class="nav-links">
+                <li class="link"><a href="homepage">Página Inicial</a></li>
+                <li class="link"><a href="sobre-o-criador">Sobre o criador</a></li>
+            </ul>
+            <form action="/logout">
+                <button class="logout" type="submit">
+                    <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>            
+                    <div class="text">Logout</div>
+                </button>
+            </form>
+        </div>
+        <div class="container">
+            <div class="header">
+                <h1>Suas tarefas</h1>
+                <button type="button" class="btn-adicionar-tarefa" id="btnAdicionarTarefa">
+                    <span class="btn-adicionar-tarefa__text">Adicione uma tarefa</span>
+                    <span class="btn-adicionar-tarefa__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+                </button>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeModalBtn">&times;</span>
+                        <h2>Adicione uma tarefa</h2>
+                        <form action="/homepage" method="POST">
+                            <input type="text" placeholder="Escreva o nome da tarefa" name="nomeTarefa">
+                            <input type="text" placeholder="Descreva a tarefa" name="descricaoTarefa">
+                            <input type="date" placeholder="Coloque a data para entrega" name="data">
+                            <button type="submit">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tarefas-colunas">
+                <div class="coluna-pendentes">
+                    <div class="pendentes-header">
+                        <h1>Pendentes</h1>
+                    </div>
+                    <div class="pendentes-content">
+                        <div class="tarefa-caixa" id="tarefa-caixa"  {% if nome_tarefa  %} style="display: flex;"{% endif %}>
+                            <div class="tarefa-header">
+                                <h5>{{nome_tarefa}}</h5>
+                            </div>
+                            <div class="tarefa-content">
+                                <p>{{descricao_tarefa}}</p>
+                            </div>
+                            <div class="tarefa-footer">
+                                <div class="data-tarefa">
+                                    <span>{{data_tarefa}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tarefa-caixa" id="tarefa-caixa"  {% if nome_tarefa  %} style="display: flex;"{% endif %}>
+                            <div class="tarefa-header">
+                                <h5>{{nome_tarefa}}</h5>
+                            </div>
+                            <div class="tarefa-content">
+                                <p>{{descricao_tarefa}}</p>
+                            </div>
+                            <div class="tarefa-footer">
+                                <div class="data-tarefa">
+                                    <span>{{data_tarefa}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tarefa-caixa" id="tarefa-caixa"  {% if nome_tarefa  %} style="display: flex;"{% endif %}>
+                            <div class="tarefa-header">
+                                <h5>{{nome_tarefa}}</h5>
+                            </div>
+                            <div class="tarefa-content">
+                                <p>{{descricao_tarefa}}</p>
+                            </div>
+                            <div class="tarefa-footer">
+                                <div class="data-tarefa">
+                                    <span>{{data_tarefa}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <div class="coluna-em-progresso">
+                    <div class="progresso-header">
+                        <h1>Em progresso</h1>
+                    </div>
+                    <div class="progresso-content">
+                    </div>
+                </div>
+                <div class="coluna-concluidas">
+                    <div class="concluidas-header">
+                        <h1>Concluídas</h1>
+                    </div>
+                    <div class="concluidas-content">
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/JavaScript/modal-adicionar-tarefas.js"></script>
 </body>
 </html>

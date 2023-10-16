@@ -3,6 +3,8 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re 
 from time import sleep
+import json
+
 app = Flask(__name__)
 
 app.secret_key = 'givisiez'
@@ -14,6 +16,9 @@ app.config['MYSQL_DB'] = 'bd_gerenciador_de_tarefas'
 
 mysql = MySQL(app)
 
+
+logado = False
+
 @app.route("/")
 def home():
     return render_template("registrar.html")
@@ -21,6 +26,7 @@ def home():
 
 @app.route("/login", methods = ['POST','GET'])
 def login():
+    global logado
     msg = ''
     msg_erro='Insira suas credenciais!'
     if request.method == 'POST' and 'email' in request.form and 'senha' in request.form: 
@@ -33,12 +39,15 @@ def login():
             session['loggedin'] = True
             session['id'] = conta['id'] 
             session['email'] = conta['email'] 
+            session['usuario'] = conta['usuario'] 
+            logado = True
             msg = 'Bem vindo!'
             return redirect(url_for('homepage'))
         else: 
             msg_erro = 'Credenciais inválidas, tente novamente!'
     return render_template('login.html', msg_erro = msg_erro) 
-    
+
+
 @app.route('/register', methods =['GET', 'POST']) 
 def register(): 
     msg = '' 
@@ -67,23 +76,75 @@ def register():
         msg = 'Por favor, preencha os campos!'
     return render_template('registrar.html', msg=msg)
 
-@app.route("/homepage")
-def homepage():
-    return render_template("home.html")
 
-@app.route("/tarefas", methods =['GET', 'POST'])
-def tarefas():
-    if request.method == 'POST' and 'tarefa' in request.form: 
-        tarefa = request.form['tarefa']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
-        cursor.execute('SELECT * FROM tarefas WHERE tarefa = % s', (tarefa, )) 
-        tarefa_bd = cursor.fetchone() 
-        if not tarefa_bd: 
-            cursor.execute('INSERT INTO tarefas VALUES (NULL, % s)', (tarefa, )) 
-            mysql.connection.commit() 
-    return render_template("tarefas.html")
-@app.route("/sobre-mim")
+
+@app.route("/sobre-o-criador")
 def sobreMim():
-    return render_template("sobre-mim.html")
+    if logado:
+        return render_template("sobre-o-criador.html")
+    return redirect(url_for('login'))
+
+@app.route("/homepage", methods =['GET','POST'])
+def homepage():
+    if logado:
+        msg=''
+        if request.method == 'POST' and 'nomeTarefa' in request.form: 
+            nome_tarefa = request.form['nomeTarefa']
+            descricao_tarefa = request.form['descricaoTarefa']
+            data_tarefa = request.form['data']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+            cursor.execute('SELECT * FROM tarefas WHERE nome_tarefa = % s', (nome_tarefa, )) 
+            tarefa_bd = cursor.fetchone() 
+            if not tarefa_bd: 
+                cursor.execute('INSERT INTO tarefas VALUES (NULL, % s, %s, %s, %s)', (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
+                mysql.connection.commit()
+                return retornaTarefa()
+            else:
+                msg='Essa tarefa já está na sua lista!' 
+        return render_template("home.html", msg=msg)
+    return redirect(url_for('login'))
+
+@app.route("/adicionar-tarefa", methods =['POST'])
+def adicionaTarefa():
+    if logado:
+        msg=''
+        if request.method == 'POST' and 'nomeTarefa' in request.form: 
+            nome_tarefa = request.form['nomeTarefa']
+            descricao_tarefa = request.form['descricaoTarefa']
+            data_tarefa = request.form['data']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+            cursor.execute('SELECT * FROM tarefas WHERE nome_tarefa = % s', (nome_tarefa, )) 
+            tarefa_bd = cursor.fetchone() 
+            if not tarefa_bd: 
+                cursor.execute('INSERT INTO tarefas VALUES (NULL, % s, %s, %s, %s)', (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
+                mysql.connection.commit()
+                return retornaTarefa()
+            else:
+                msg='Essa tarefa já está na sua lista!' 
+        return render_template("home.html", msg=msg)
+    return redirect(url_for("login"))
+
+def retornaTarefa():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM tarefas WHERE usuario_id = %s", (session['id'], ))
+    data_user_tarefas = cursor.fetchall()
+    tarefas_dict= {session['usuario']: []}
+    for data in data_user_tarefas:
+        tarefas_dict[session['usuario']].append([data['nome_tarefa'], data['descricao_tarefa'], (data['data_tarefa']).strftime("%d/%m/%Y")])
+    for item in tarefas_dict[session['usuario']]:
+        nome_tarefa, descricao_tarefa, data_tarefa = item[0], item[1], item[2]
+    return render_template("home.html",nome_tarefa=nome_tarefa, descricao_tarefa=descricao_tarefa, data_tarefa=data_tarefa)
+
+@app.route('/logout') 
+def logout(): 
+    global logado
+    if logado:
+        session.pop('loggedin', None) 
+        session.pop('id', None) 
+        session.pop('username', None) 
+        logado = False
+        return redirect(url_for('login')) 
+    return redirect(url_for('login'))
+
 if __name__ == "__main__":
     app.run(debug=True)
