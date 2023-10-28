@@ -104,26 +104,6 @@ def homepage():
         return render_template("home.html", msg=msg)
     return redirect(url_for('login'))
 
-@app.route("/adicionar-tarefa", methods =['POST'])
-def adicionaTarefa():
-    if logado:
-        msg=''
-        if request.method == 'POST' and 'nomeTarefa' in request.form: 
-            nome_tarefa = request.form['nomeTarefa']
-            descricao_tarefa = request.form['descricaoTarefa']
-            data_tarefa = request.form['data']
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
-            cursor.execute('SELECT * FROM tarefas WHERE nome_tarefa = % s', (nome_tarefa, )) 
-            tarefa_bd = cursor.fetchone() 
-            if not tarefa_bd: 
-                cursor.execute('INSERT INTO tarefas VALUES (NULL, % s, %s, %s, %s)', (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
-                mysql.connection.commit()
-                return retornaTarefa()
-            else:
-                msg='Essa tarefa já está na sua lista!' 
-        return render_template("home.html", msg=msg)
-    return redirect(url_for("login"))
-
 def retornaTarefa():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM tarefas WHERE usuario_id = %s", (session['id'], ))

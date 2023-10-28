@@ -5,23 +5,23 @@
     border:none;
     box-sizing: border-box;
     font-family: 'Catrinity', sans-serif;   
-}
-
-a{
+  }
+  
+  a{
     text-decoration: none;
-}
-
-html, body{
-  height: 100%;
-  margin: 0;
-}
-
-.corpo{
+  }
+  
+  html, body{
+    height: 100%;
+    margin: 0;
+  }
+  
+  .corpo{
     height: 100%;                                    
-}
-
-
-.div-links{
+  }
+  
+  
+  .div-links{
     padding: 2rem 1rem;
     display: flex;
     align-items: center;
@@ -30,42 +30,43 @@ html, body{
     border-bottom: 1px  #264653 ;
     box-shadow: 3px 5px 20px  rgb(39, 71, 84, 0.1);
     height: 8%;
-}
-
-.nav-links{
+  }
+  
+  .nav-links{
     list-style: none;
     display: flex;
     align-items: center;
     gap: 3rem;
-}
-
-.link a{
+  }
+  
+  .link a{
     position: relative;
     padding-top: 0.65rem;
     padding-bottom: 0.65rem;
     padding-right: 3rem;
-    color: #264653;
+    color: #00949B;
     font-size: 1.3rem;
-    border-right: 2px solid #264653;
-}
-
-.link a::after{
+    font-weight: bold;
+    border-right: 2px solid #00949B;
+  }
+  
+  .link a::after{
     content: "";
     position: absolute;
     height: 2px;
     width: 0;
     bottom: 0;
     left: 0;
-    background-color: #264653;
+    background-color: #00949B;
     transition: all 0.3s ease;
-}
-
-.link a:hover::after{
+  }
+  
+  .link a:hover::after{
     width: 70%;
-}
-
-
-.logout{
+  }
+  
+  
+  .logout{
     --black: #000000;
     --ch-black: #141414;
     --eer-black: #1b1b1b;
@@ -137,19 +138,20 @@ html, body{
   .logout:active {
     transform: translate(2px ,2px);
   }
-
-
-.container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: normal;
-  align-items: normal;
-  align-content: normal;
-  height: 92%;
-  padding: 0px 10px 10px 10px;
-}
-
+  
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: normal;
+    align-items: normal;
+    align-content: normal;
+    height: 92%;
+    padding: 0px 10px 10px 10px;
+    background-color: #ffffff;
+  }
+  
 .header{
   display: flex;
   justify-content: space-between;
@@ -159,6 +161,12 @@ html, body{
 
 }
 
+.header h1{
+  color: #00949B;
+}
+.coluna-header{
+  color: #00949B
+}
 .btn-adicionar-tarefa {
   position: relative;
   width: 200px;
@@ -166,9 +174,8 @@ html, body{
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: 1px solid #34974d;
-  background-color: #3aa856;
-
+  border: 1px solid #9BAEBC;
+  background-color: #00949B;
 }
 
 .btn-adicionar-tarefa, .btn-adicionar-tarefa__icon, .btn-adicionar-tarefa__text {
@@ -178,7 +185,7 @@ html, body{
 .btn-adicionar-tarefa .btn-adicionar-tarefa__text {
   font-family: 'Niramit', sans-serif;
   font-size: 15px;
-  color: #fff;
+  color: #ADFCFE;
   font-weight: 600;
   margin-left: 8px;
   margin-bottom: 3px;
@@ -189,7 +196,7 @@ html, body{
   transform: translateX(160px);
   height: 100%;
   width: 39px;
-  background-color: #34974d;
+  background-color: #9BAEBC;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,7 +208,7 @@ html, body{
 }
 
 .btn-adicionar-tarefa:hover {
-  background: #34974d;
+  background: #00949B;
 }
 
 .btn-adicionar-tarefa:hover .btn-adicionar-tarefa__text {
@@ -214,11 +221,11 @@ html, body{
 }
 
 .btn-adicionar-tarefa:active .btn-adicionar-tarefa__icon {
-  background-color: #2e8644;
+  background-color: #9BAEBC;
 }
 
 .btn-adicionar-tarefa:active {
-  border: 1px solid #2e8644;
+  border: 1px solid #9BAEBC;
 }
 
 .tarefas-colunas {
@@ -268,17 +275,27 @@ html, body{
   justify-content: space-between;
   align-items: flex-start;
   align-content: stretch;
-  background-color: #ababab;
+  background-color: #ADFCFE;
   padding: 7px 20px;
   border-radius: 8px;
   height: 142px;
   margin: 15px 5px;
   width: 60%;
+  color: #00949B;
 }
 
 .tarefa-caixa:hover{
   transform: translate(-3px);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.23);
+}
+
+.tarefa-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  width: 100%;
 }
 
 .tarefa-content p{
@@ -295,35 +312,4 @@ html, body{
   margin-top: 10px;
   font-size: 14px;
   color: black;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
-}
-
-/* Estilo para o conteúdo do modal */
-.modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-}
-
-/* Estilo para o botão de fechar o modal */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 20px;
 }
