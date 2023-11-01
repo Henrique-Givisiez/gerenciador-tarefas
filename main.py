@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session, redirect
+from flask import Flask, render_template, request, redirect, url_for, session, redirect, jsonify
 from flask_mysqldb import MySQL 
 import MySQLdb.cursors
 import re 
 from time import sleep
-import json
+from json import dumps
 
 app = Flask(__name__)
 
@@ -76,45 +76,6 @@ def register():
         msg = 'Por favor, preencha os campos!'
     return render_template('registrar.html', msg=msg)
 
-
-
-@app.route("/sobre-o-criador")
-def sobreMim():
-    if logado:
-        return render_template("sobre-o-criador.html")
-    return redirect(url_for('login'))
-
-@app.route("/homepage", methods =['GET','POST'])
-def homepage():
-    if logado:
-        msg=''
-        if request.method == 'POST' and 'nomeTarefa' in request.form: 
-            nome_tarefa = request.form['nomeTarefa']
-            descricao_tarefa = request.form['descricaoTarefa']
-            data_tarefa = request.form['data']
-            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
-            cursor.execute('SELECT * FROM tarefas WHERE nome_tarefa = % s', (nome_tarefa, )) 
-            tarefa_bd = cursor.fetchone() 
-            if not tarefa_bd: 
-                cursor.execute('INSERT INTO tarefas VALUES (NULL, % s, %s, %s, %s)', (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
-                mysql.connection.commit()
-                return retornaTarefa()
-            else:
-                msg='Essa tarefa já está na sua lista!' 
-        return render_template("home.html", msg=msg)
-    return redirect(url_for('login'))
-
-def retornaTarefa():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT * FROM tarefas WHERE usuario_id = %s", (session['id'], ))
-    data_user_tarefas = cursor.fetchall()
-    tarefas_dict= {session['usuario']: []}
-    for data in data_user_tarefas:
-        tarefas_dict[session['usuario']].append([data['nome_tarefa'], data['descricao_tarefa'], (data['data_tarefa']).strftime("%d/%m/%Y")])
-    for item in tarefas_dict[session['usuario']]:
-        nome_tarefa, descricao_tarefa, data_tarefa = item[0], item[1], item[2]
-    return render_template("home.html",nome_tarefa=nome_tarefa, descricao_tarefa=descricao_tarefa, data_tarefa=data_tarefa)
-
 @app.route('/logout') 
 def logout(): 
     global logado
@@ -124,6 +85,76 @@ def logout():
         session.pop('username', None) 
         logado = False
         return redirect(url_for('login')) 
+    return redirect(url_for('login'))
+
+
+
+@app.route("/homepage", methods =['GET','POST'])
+def homepage():
+    if logado:
+        if request.method == 'GET':
+            inicializaTarefas()
+        if request.method == 'POST' and 'nomeTarefa' in request.form: 
+            adicionaTarefa()
+        return render_template("home.html")
+    return redirect(url_for('login'))
+
+@app.route("/adiciona-tarefa", methods=['POST'])
+def adicionaTarefa():
+    if request.method == 'POST':
+        nome_tarefa = request.form.get("nomeTarefa")
+        descricao_tarefa = request.form.get("descricaoTarefa")
+        data_tarefa = request.form.get("data")
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+        cursor.execute('SELECT * FROM tarefas WHERE nome_tarefa = % s', (nome_tarefa, )) 
+        tarefa_bd = cursor.fetchone() 
+
+        if not tarefa_bd: 
+            cursor.execute('INSERT INTO tarefas VALUES (NULL, % s, %s, %s, %s)', (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
+            mysql.connection.commit()
+            tarefa_submetida = {
+                "categoria": nome_tarefa,
+                "descricao": descricao_tarefa,
+                "data": data_tarefa,
+                "ID": cursor.lastrowid
+                }
+            return jsonify(tarefa_submetida)
+            
+@app.route("/inicializa-tarefas")
+def inicializaTarefas():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM tarefas WHERE usuario_id = %s", (session['id'], ))
+    data_user_tarefas = cursor.fetchall()
+    tarefas_do_usuario = {}
+    for indice, tarefa_tupla in enumerate(data_user_tarefas):
+        dict_tarefa = {
+            "categoria": tarefa_tupla["nome_tarefa"],
+            "descricao": tarefa_tupla["descricao_tarefa"],
+            "data": tarefa_tupla["data_tarefa"],
+            "ID": tarefa_tupla['id']
+        }
+        tarefas_do_usuario["tarefa_"+str(indice)] = dict_tarefa
+    return jsonify(tarefas_do_usuario)
+
+@app.route("/excluir-tarefa", methods=['POST'])
+def excluirTarefa():
+    id_tarefa_excluida = request.form.get("tarefa_excluida")
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    try:
+        cursor.execute("DELETE FROM tarefas WHERE id= %s", (id_tarefa_excluida, ))
+        mysql.connection.commit()
+        return jsonify({"message": "Tarefa excluída com sucesso"})
+    except Exception as error:
+        mysql.connection.rollback()
+        return jsonify({"error": str(error)}), 500
+    finally:
+        cursor.close()
+        
+@app.route("/sobre-o-criador")
+def sobreMim():
+    if logado:
+        return render_template("sobre-o-criador.html")
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
