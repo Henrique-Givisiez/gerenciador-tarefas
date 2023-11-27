@@ -1,6 +1,7 @@
 document.getElementById("form_tarefas").addEventListener("submit", function(event){
     event.preventDefault()
-    var formData = new FormData(document.getElementById("form_tarefas"));
+    form_add_tarefas = document.getElementById("form_tarefas");
+    var formData = new FormData(form_add_tarefas);
     // Recebe os dados JSON
     fetch("/adiciona-tarefa", {
         method: "POST",
@@ -9,6 +10,8 @@ document.getElementById("form_tarefas").addEventListener("submit", function(even
     .then(response => response.json())
     .then(dado => {
         funcAdicionaTarefas(dado);
+        form_add_tarefas.reset();
+        location.reload();
     })
     
 })

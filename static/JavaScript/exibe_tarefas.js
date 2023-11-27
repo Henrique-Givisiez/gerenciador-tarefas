@@ -48,19 +48,25 @@ function tarefasUI (categoria_tarefa, descricao_tarefa, data_tarefa, id_tarefa) 
             muda_para_progresso.id = 'muda_progresso';
             var muda_para_concluida = document.createElement('button');
             muda_para_concluida.id = 'muda_concluida';
+            
+            // Cria o botão para editar a tarefa
+            var editar_tarefa = document.createElement("button");
+            editar_tarefa.id = "editar_tarefa";
 
             // Cria o botão para excluir a tarefa
             var excluir_tarefa = document.createElement("button");
             excluir_tarefa.id = "excluir_tarefa";
-            
+
             // Atribui as classes para os botões e adiciona conteúdo
             muda_para_pendente.className = 'move-tarefa';
             muda_para_progresso.className = 'move-tarefa';
             muda_para_concluida.className = 'move-tarefa';
             excluir_tarefa.className = "excluir-tarefa";
+            editar_tarefa.className = "editar-tarefa";
             muda_para_pendente.textContent = 'Alterar para pendente';
             muda_para_progresso.textContent = 'Alterar para em progresso';
             muda_para_concluida.textContent = 'Alterar para concluida';
+            editar_tarefa.textContent = "Editar tarefa";
             excluir_tarefa.textContent = "Exclua a tarefa";
     
             // Criação de atributos para os botões de alterar o status usando, posteriormente, 'dataset' para informar o destino da tarefa
@@ -72,6 +78,7 @@ function tarefasUI (categoria_tarefa, descricao_tarefa, data_tarefa, id_tarefa) 
             dropdownContentDiv.appendChild(muda_para_pendente);
             dropdownContentDiv.appendChild(muda_para_progresso);
             dropdownContentDiv.appendChild(muda_para_concluida);
+            dropdownContentDiv.appendChild(editar_tarefa);
             dropdownContentDiv.appendChild(excluir_tarefa);
             dropdownDiv.appendChild(button);
             dropdownDiv.appendChild(dropdownContentDiv);

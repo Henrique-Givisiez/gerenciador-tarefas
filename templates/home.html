@@ -37,7 +37,7 @@
                     <div class="modal-content">
                         <h2 style="color: white;">Adicione uma tarefa</h2>
                         <form method="POST" id="form_tarefas" class="form_tarefas" action="/homepage">
-                            <span class="close" id="closeModalBtn">&times;</span>
+                        <span class="close" id="closeModalBtn">&times;</span>
                             <label for="form_nome_tarefa">Categoria</label>
                             <input type="text" placeholder="Qual a categoria da tarefa?" name="nomeTarefa" id="form_nome_tarefa">
                             <label for="form_descricao_tarefa">Descrição</label>
@@ -46,6 +46,21 @@
                             <input type="date"  name="data" id="form_data_tarefa">
                             <button type="submit" id="envia_tarefa">Enviar</button>
                         </form>
+                    </div>
+                </div>
+                <div id='modalEditarTarefa'class="modal">
+                    <div class="modal-content">
+                    <h2 style="color: white;">Editar tarefa</h2>
+                    <form method="POST" id="form_editar_tarefas" class="form_tarefas" action="/editar-tarefa">
+                    <span class="close" id="closeModalEditBtn">&times;</span>
+                        <label for="form_nome_tarefa">Categoria</label>
+                        <input type="text" placeholder="Qual a categoria da tarefa?" name="nova_tarefa" id="novo_form_nome_tarefa">
+                        <label for="form_descricao_tarefa">Descrição</label>
+                        <textarea id="novo_form_descricao_tarefa" placeholder="Descreva a tarefa" type="text" rows="8" cols="30" name="nova_descricao_tarefa"></textarea>
+                        <label for="form_data_tarefa">Data</label>
+                        <input type="date"  name="nova_data" id="novo_form_data_tarefa">
+                        <button type="submit" id="envia_tarefa">Enviar</button>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -81,5 +96,6 @@
     <script src="static/JavaScript/menu_dot.js"></script>
     <script src="static/JavaScript/inicializa_tarefas.js"></script>
     <script src="static/JavaScript/adiciona_tarefa.js"></script>
+    <script src="static/JavaScript/editar_tarefa.js"></script>
 </body>
 </html>

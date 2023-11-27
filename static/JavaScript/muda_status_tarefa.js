@@ -41,6 +41,8 @@ function excluirTarefa(tarefa){
     }
 }
 
+// Função para editar a tarefa
+
 // Adiciona ouvintes de evento para os botões que movem ou excluem tarefas
 document.addEventListener('click', function (event) {
     const target = event.target;

@@ -94,10 +94,24 @@ def homepage():
     if logado:
         if request.method == 'GET':
             inicializaTarefas()
-        if request.method == 'POST' and 'nomeTarefa' in request.form: 
-            adicionaTarefa()
         return render_template("home.html")
     return redirect(url_for('login'))
+
+@app.route("/inicializa-tarefas")
+def inicializaTarefas():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute("SELECT * FROM tarefas WHERE usuario_id = %s", (session['id'], ))
+    data_user_tarefas = cursor.fetchall()
+    tarefas_do_usuario = {}
+    for indice, tarefa_tupla in enumerate(data_user_tarefas):
+        dict_tarefa = {
+            "categoria": tarefa_tupla["nome_tarefa"],
+            "descricao": tarefa_tupla["descricao_tarefa"],
+            "data": tarefa_tupla["data_tarefa"].strftime("%d/%m/%y"),
+            "ID": tarefa_tupla['id']
+        }
+        tarefas_do_usuario["tarefa_"+str(indice)] = dict_tarefa
+    return jsonify(tarefas_do_usuario)
 
 @app.route("/adiciona-tarefa", methods=['POST'])
 def adicionaTarefa():
@@ -121,22 +135,36 @@ def adicionaTarefa():
                 }
             return jsonify(tarefa_submetida)
             
-@app.route("/inicializa-tarefas")
-def inicializaTarefas():
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute("SELECT * FROM tarefas WHERE usuario_id = %s", (session['id'], ))
-    data_user_tarefas = cursor.fetchall()
-    tarefas_do_usuario = {}
-    for indice, tarefa_tupla in enumerate(data_user_tarefas):
-        dict_tarefa = {
-            "categoria": tarefa_tupla["nome_tarefa"],
-            "descricao": tarefa_tupla["descricao_tarefa"],
-            "data": tarefa_tupla["data_tarefa"],
-            "ID": tarefa_tupla['id']
-        }
-        tarefas_do_usuario["tarefa_"+str(indice)] = dict_tarefa
-    return jsonify(tarefas_do_usuario)
+@app.route("/editar-tarefa", methods=['POST'])
+def editarTarefa():
+    if request.method == 'POST':
+        # Busca o id da tarefa a ser editada o qual será enviado pelo javascript
+        id_tarefa_editada = request.form.get('id_tarefa_editada')
 
+        # Busca os novos valores do formulário
+        nova_categoria_tarefa = request.form.get('nova_tarefa')
+        nova_descricao_tarefa = request.form.get('nova_descricao_tarefa')
+        nova_data_tarefa = request.form.get("nova_data")
+
+        # Conecta ao BD e faz as alterações necessárias para alterar tabela contendo as tarefas a serem editadas
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        try:
+            # Atualiza a tabela tarefas com os novos valores atualizados 
+            cursor.execute('UPDATE tarefas SET nome_tarefa=%s,descricao_tarefa=%s,data_tarefa=%s WHERE id=%s',(nova_categoria_tarefa, nova_descricao_tarefa, nova_data_tarefa, id_tarefa_editada, ))
+            mysql.connection.commit()
+            nova_tarefa = {
+                "novaCategoria": nova_categoria_tarefa,
+                "novaDescricao": nova_descricao_tarefa,
+                "novaData": nova_data_tarefa,
+                "id": id_tarefa_editada
+            }
+            return jsonify(nova_tarefa)
+        except Exception as error:
+            mysql.connection.rollback()
+            return jsonify({'error': str(error)}), 500
+        finally:
+            cursor.close()
+            
 @app.route("/excluir-tarefa", methods=['POST'])
 def excluirTarefa():
     id_tarefa_excluida = request.form.get("tarefa_excluida")
