@@ -5,7 +5,7 @@ function moverTarefa(tarefa, destino) {
         const colunaDestino = document.getElementById(`${destino}-content`);
         
         // Verifica se a coluna de destino existe
-        if (colunaDestino && ((colunaDestino.getElementsByClassName("tarefa-caixa").length)<4)) {
+        if (colunaDestino) {
             // Remove a tarefa da coluna atual
             const colunaAtual = tarefa.parentElement;
             colunaAtual.removeChild(tarefa);

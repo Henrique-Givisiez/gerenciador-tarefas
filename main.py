@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, r
 from flask_mysqldb import MySQL 
 import MySQLdb.cursors
 import re 
-from time import sleep
-from json import dumps
 
 app = Flask(__name__)
 
@@ -70,7 +68,6 @@ def register():
             cursor.execute('INSERT INTO contas VALUES (NULL, % s, % s, % s)', (usuario, senha, email, )) 
             mysql.connection.commit() 
             msg = 'Conta criada com sucesso! Insira seus dados no campo de login para entrar.'
-            sleep(0.5)
             return render_template('login.html', msg = msg) 
     elif request.method == 'POST': 
         msg = 'Por favor, preencha os campos!'

@@ -20,21 +20,21 @@ function tarefasUI (categoria_tarefa, descricao_tarefa, data_tarefa, id_tarefa) 
             
             // Cria o símbolo do menu 
             const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svgElement.setAttribute("width", "22");
-            svgElement.setAttribute("height", "22");
+            svgElement.setAttribute("width", "16");
+            svgElement.setAttribute("height", "15");
             svgElement.setAttribute("fill", "currentColor");
-            svgElement.setAttribute("class", "bi bi-three-dots");
+            svgElement.setAttribute("class", "bi bi-list");
             svgElement.setAttribute("viewBox", "0 0 16 16");
             const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            pathElement.setAttribute("d", "M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3");
+            pathElement.setAttribute("d", "M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5");
             svgElement.appendChild(pathElement);
 
+            
+            button.appendChild(svgElement);
             // Função 'toggleDropdown' que exibirá as opções do menu 
             button.onclick = function(){
                 toggleDropdown(button);
             };
-
-            button.appendChild(svgElement);
             
             // Cria a div, inicialmente escondida, irá exibir as opções para alterar o status da tarefa
             var dropdownContentDiv = document.createElement('div');

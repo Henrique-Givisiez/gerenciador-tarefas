@@ -1,6 +1,7 @@
 // Função para mostrar/ocultar o dropdown
 function toggleDropdown(btn) {
-    var parent_div = btn.parentElement; 
+    var parent_div = btn.parentElement;
+    alert(parent_div.classList); 
     var dropdown = parent_div.querySelector("#myDropdown");
     dropdown.classList.toggle("show");
   }

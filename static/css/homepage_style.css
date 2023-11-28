@@ -1,171 +1,186 @@
 *{
-    padding: 0;
-    margin: 0;
-    outline: none;
-    border:none;
-    box-sizing: border-box;
-    font-family: 'Catrinity', sans-serif;   
-  }
-  
-  a{
-    text-decoration: none;
-  }
-  
-  html, body{
-    height: 100%;
-    margin: 0;
-  }
-  
-  .corpo{
-    height: 100%;                                    
-  }
-  
-  
-  .div-links{
-    padding: 2rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    border-bottom: 1px  #264653 ;
-    box-shadow: 3px 5px 20px  rgb(39, 71, 84, 0.1);
-    height: 8%;
-  }
-  
-  .nav-links{
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-  }
-  
-  .link a{
-    position: relative;
-    padding-top: 0.65rem;
-    padding-bottom: 0.65rem;
-    padding-right: 3rem;
-    color: #00949B;
-    font-size: 1.3rem;
-    font-weight: bold;
-    border-right: 2px solid #00949B;
-  }
-  
-  .link a::after{
-    content: "";
-    position: absolute;
-    height: 2px;
-    width: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #00949B;
-    transition: all 0.3s ease;
-  }
-  
-  .link a:hover::after{
-    width: 70%;
-  }
-  
-  
-  .logout{
-    --black: #000000;
-    --ch-black: #141414;
-    --eer-black: #1b1b1b;
-    --night-rider: #2e2e2e;
-    --white: #ffffff;
-    --af-white: #f3f3f3;
-    --ch-white: #e1e1e1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    position:relative;
-    overflow: hidden;
-    transition-duration: .3s;
-    background-color: white;
-  }
-  
-  /* plus sign */
-  .sign {
-    width: 100%;
-    transition-duration: .3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .sign svg {
-    width: 17px;
-  }
-  
-  .sign svg path {
-    fill: var(--night-rider);
-  }
-  /* text */
-  .text {
-    position: absolute;
-    right: 0%;
-    width: 0%;
-    opacity: 0;
-    color: var(--night-rider);
-    font-size: 1.2em;
-    font-weight: 600;
-    transition-duration: .3s;
-  }
-  /* hover effect on button width */
-  .logout:hover {
-    width: 125px;
-    border-radius: 5px;
-    transition-duration: .3s;
-  }
-  
-  .logout:hover .sign {
-    width: 30%;
-    transition-duration: .3s;
-    padding-left: 20px;
-  }
-  /* hover effect button's text */
-  .logout:hover .text {
-    opacity: 1;
-    width: 70%;
-    transition-duration: .3s;
-    padding-right: 10px;
-  }
-  /* button click effect*/
-  .logout:active {
-    transform: translate(2px ,2px);
-  }
-  
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: normal;
-    align-items: normal;
-    align-content: normal;
-    height: 92%;
-    padding: 0px 10px 10px 10px;
-    background-color: #ffffff;
-  }
-  
-.header{
+  padding: 0;
+  margin: 0;
+  outline: none;
+  border:none;
+  box-sizing: border-box;
+  font-family: 'Catrinity', sans-serif;   
+}
+
+a{
+  text-decoration: none;
+}
+
+html, body{
+  height: 100%;
+  margin: 0;
+  border: 0px solid #FFF;
+  background: #342C49;
+}
+/* ----------------------------------------------------------------------------------- */  
+/*  Seção 1 - Edição do header que conterá: os links de navegação e o botão de logout  */
+/* ----------------------------------------------------------------------------------- */  
+.header-links{
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 70px;
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  height: 12%;
+  align-content: normal;
+
+}
+
+.header-links .nav-links{
+  background-color: rgb(255, 255, 255);
+  height: 100%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.header-links .nav-links .link a{
+  position: relative;
+  color: rgba(95, 51, 219, 0.88);
+  font-size: 27px;
+}
+
+.header-links .nav-links li {
+  height: 70%;
+  display: flex;
+  align-items: center;
+}
+.header-links .nav-links li:nth-child(1) {
+  margin-left: 30px;
+}
+.header-links .nav-links li:nth-child(2) {
+  margin-left: 15px;
+  border-left: 2px solid #342C49;
+}
+
+.header-links .nav-links li:nth-child(2) a{
+  margin-left: 15px;
+} 
+
+.link a::after{
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #342C49;
+  transition: all 0.3s ease;
+}
+
+.link a:hover::after{
+  width: 70%;
+}
+
+.logout{
+  --black: #000000;
+  --ch-black: #141414;
+  --eer-black: #1b1b1b;
+  --night-rider: #2e2e2e;
+  --white: #ffffff;
+  --af-white: #f3f3f3;
+  --ch-white: #e1e1e1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position:relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  background-color: white;
+  margin-right: 30px;
+}
+
+.sign-logout {
   width: 100%;
-
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.header h1{
-  color: #00949B;
+.sign-logout svg {
+  width: 17px;
 }
-.coluna-header{
-  color: #00949B
+
+.sign-logout svg path {
+  fill: var(--night-rider);
+}
+
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: var(--night-rider);
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+
+.logout:hover {
+  width: 125px;
+  border-radius: 5px;
+  transition-duration: .3s;
+}
+
+.logout:hover .sign-logout {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 20px;
+}
+
+.logout:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 10px;
+}
+
+.logout:active {
+  transform: translate(2px ,2px);
+}
+
+/* ----------------------------------------------------------------------------------------------------- */  
+/*  Seção 2 - Edição do container principal que irá exibir as tarefas, o form de adição de tarefas, etc  */
+/* ----------------------------------------------------------------------------------------------------- */  
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: normal;
+  align-items: normal;
+  align-content: normal;
+  min-height: 100%;
+  margin: 25px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding-bottom: 30px;
+}
+
+.header-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.header-container h1{
+  color: rgba(95, 51, 219, 0.88);
 }
 .btn-adicionar-tarefa {
   position: relative;
@@ -174,8 +189,8 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: 1px solid #9BAEBC;
-  background-color: #00949B;
+  background-color: #342C49;
+  box-shadow: 5px 6px 6px #bababa
 }
 
 .btn-adicionar-tarefa, .btn-adicionar-tarefa__icon, .btn-adicionar-tarefa__text {
@@ -185,9 +200,9 @@
 .btn-adicionar-tarefa .btn-adicionar-tarefa__text {
   font-family: 'Niramit', sans-serif;
   font-size: 15px;
-  color: #ADFCFE;
+  color: #ffffff;
   font-weight: 600;
-  margin-left: 8px;
+  margin-left: 9px;
   margin-bottom: 3px;
 }
 
@@ -195,8 +210,8 @@
   position: absolute;
   transform: translateX(160px);
   height: 100%;
-  width: 39px;
-  background-color: #9BAEBC;
+  width: 20%;
+  background-color: rgba(95, 51, 219, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,7 +223,7 @@
 }
 
 .btn-adicionar-tarefa:hover {
-  background: #00949B;
+  background: #342C49;
 }
 
 .btn-adicionar-tarefa:hover .btn-adicionar-tarefa__text {
@@ -216,27 +231,35 @@
 }
 
 .btn-adicionar-tarefa:hover .btn-adicionar-tarefa__icon {
-  width: 198px;
+  width: 100%;
   transform: translateX(0);
-}
-
-.btn-adicionar-tarefa:active .btn-adicionar-tarefa__icon {
-  background-color: #9BAEBC;
-}
-
-.btn-adicionar-tarefa:active {
-  border: 1px solid #9BAEBC;
 }
 
 .tarefas-colunas {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.coluna-header{
+  background-color: rgba(95, 51, 219, 0.88);
+  color: #ffffff;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 4px 6px 6px #bababa,
+  -6px -6px 10px #ffffff;
+}
+
+.coluna-header h1{
+  margin-top: 5px;
 }
 
 .coluna-pendentes{
   width: 30%;
-
 }
 
 .coluna-em-progresso{
@@ -247,39 +270,19 @@
   width: 30%;
 }
 
-.pendentes-header{
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  margin-bottom: 10px;
-}
-
-.progresso-header{
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  margin-bottom: 10px;
-}
-
-.concluidas-header{
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  margin-bottom: 10px;
-}
-
 .tarefa-caixa{
-  display:none;
+  display:flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
   align-content: stretch;
-  background-color: #ADFCFE;
+  background-color: rgba(95, 51, 219, 0.88);
+  color: white;
   padding: 7px 20px;
   border-radius: 8px;
-  height: 142px;
-  margin: 15px 5px;
+  height: 160px;
+  margin-top: 30px;
   width: 60%;
 }
 
@@ -293,22 +296,20 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
+  font-size: 23px;
   width: 100%;
 }
 
-.tarefa-content p{
+.tarefa-content{
   margin: 2px 0 15px;
-  font-size: 14px; 
+  font-size: 17px; 
   font-weight: 400; 
 }
 
 .tarefa-footer{
+  width: 100%;
   display: flex;
-  list-style: none;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
   font-size: 14px;
-  color: black;
 }
