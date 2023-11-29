@@ -66,6 +66,7 @@ width: 100%;
 background-color: rgb(235, 0, 0);
 color: white;
 }
+
 /* Mostrar o dropdown quando o botão é clicado */
 .show {
 display: block;
