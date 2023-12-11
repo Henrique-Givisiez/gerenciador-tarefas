@@ -2,15 +2,21 @@ from flask import Flask, render_template, request, redirect, url_for, session, r
 from flask_mysqldb import MySQL 
 import MySQLdb.cursors
 import re 
+from hashlib import sha256
 
 app = Flask(__name__)
 
 app.secret_key = 'givisiez'
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Luco@1504'
-app.config['MYSQL_DB'] = 'bd_gerenciador_de_tarefas'
+host = 'localhost'
+user = 'root'
+password = 'Luco@1504'
+database = 'bd_gerenciador_de_tarefas'
+
+app.config['MYSQL_HOST'] = host
+app.config['MYSQL_USER'] = user
+app.config['MYSQL_PASSWORD'] = password
+app.config['MYSQL_DB'] = database
 
 mysql = MySQL(app)
 
@@ -30,8 +36,9 @@ def login():
     if request.method == 'POST' and 'email' in request.form and 'senha' in request.form: 
         email = request.form['email'] 
         senha = request.form['senha'] 
+        senha_criptografada = sha256(senha.encode()).hexdigest()
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
-        cursor.execute('SELECT * FROM contas WHERE email = % s AND senha = % s', (email, senha, )) 
+        cursor.execute('SELECT * FROM contas WHERE email = % s AND senha = % s', (email, senha_criptografada, )) 
         conta = cursor.fetchone() 
         if conta: 
             session['loggedin'] = True
@@ -43,7 +50,7 @@ def login():
             return redirect(url_for('homepage'))
         else: 
             msg_erro = 'Credenciais inválidas, tente novamente!'
-    return render_template('login.html', msg_erro = msg_erro) 
+    return render_template('login.html') 
 
 
 @app.route('/register', methods =['GET', 'POST']) 
@@ -57,7 +64,7 @@ def register():
         cursor.execute('SELECT * FROM contas WHERE usuario = % s', (usuario, )) 
         account = cursor.fetchone() 
         if account: 
-            msg = 'Essa conta já exisste!'
+            msg = 'Essa conta já existe!'
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email): 
             msg = 'Endereço de email inválido!'
         elif not re.match(r'[A-Za-z0-9]+', usuario): 
@@ -65,13 +72,14 @@ def register():
         elif not usuario or not senha or not email: 
             msg = 'Por favor, preencha os campos!'
         else: 
-            cursor.execute('INSERT INTO contas VALUES (NULL, % s, % s, % s)', (usuario, senha, email, )) 
+            senha_criptografada = sha256(senha.encode()).hexdigest()
+            cursor.execute('INSERT INTO contas VALUES (NULL, % s, % s, % s)', (usuario, senha_criptografada, email, )) 
             mysql.connection.commit() 
             msg = 'Conta criada com sucesso! Insira seus dados no campo de login para entrar.'
-            return render_template('login.html', msg = msg) 
+            return render_template('login.html') 
     elif request.method == 'POST': 
         msg = 'Por favor, preencha os campos!'
-    return render_template('registrar.html', msg=msg)
+    return render_template('registrar.html')
 
 @app.route('/logout') 
 def logout(): 
