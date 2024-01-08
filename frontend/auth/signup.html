@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registar | Gerenciador de Tarefas</title>
+    <link rel="stylesheet" type="text/css" href="auth.css">
+</head>
+<body>
+
+    <div class="container">
+        <form class="form_signup" id="form_signup">
+            <span class="title">Registrar</span>
+            <span class="subtitle">Crie uma conta com seu email.</span>
+            <div class="form-container">
+              <input type="text" class="input" placeholder="Usuário" name="usuario">
+                    <input type="email" class="input" placeholder="Email" name="email">
+                    <input type="password" class="input" placeholder="Senha" name="senha">
+            </div>
+            <button type="submit" value="submit">Criar conta</button>
+        </form>
+        <div class="form_go_to_login">
+          <p>Já possui uma conta? Faça seu login por <a href="/login">aqui</a> </p>
+        </div>
+    </div>
+
+    <script src="signup_api.js"></script>
+</body>
+</html>

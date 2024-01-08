@@ -12,9 +12,9 @@ Observação: a função 'tarefasUI' irá exibir de fato os dados das tarefas na
 */
 function funcInicializaTarefas(dado) {
     // Busca os valores de cada item no objeto 'data'
-    
     for (const chave in dado) {
         const tarefa = dado[chave];
+        // Chama a função 'tarefasUI' para cada tarefa
         tarefasUI(tarefa.categoria, tarefa.descricao, tarefa.data, tarefa.ID);
     }
 }

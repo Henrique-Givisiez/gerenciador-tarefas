@@ -1,10 +1,10 @@
-// Referências aos elementos
-var openModalBtn = document.getElementById("btnAdicionarTarefa");
+// Seleção dos elementos necessários para adicionar a tarefa
+var btnAdicionarTarefa = document.getElementById("btnAdicionarTarefa");
 var closeModalBtn = document.getElementById("closeModalBtn");
 var modal = document.getElementById("myModal");
 
 // Abrir o modal quando o botão for clicado
-openModalBtn.addEventListener("click", function() {
+btnAdicionarTarefa.addEventListener("click", function() {
     modal.style.display = "block";
 });
 

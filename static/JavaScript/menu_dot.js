@@ -1,10 +1,15 @@
 // Função para mostrar/ocultar o dropdown
 function toggleDropdown(btn) {
+    // Busca o primeiro elemento pai do botão passado como parâmetro
     var parent_div = btn.parentElement;
+
+    // Seleciona o dropdown que irá conter os botões de mudar o estado da tarefa
     var dropdown = parent_div.querySelector("#myDropdown");
-    dropdown.classList.toggle("show");
+
+    dropdown.classList.toggle("show"); // Mostra o dropdown
   }
-  
+
+
   window.onclick = function(event) {
     var buttons = document.querySelectorAll('button.menu');
 

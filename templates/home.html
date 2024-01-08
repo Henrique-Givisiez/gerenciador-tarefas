@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas | Homepage</title>
+    <!--Cria links de referência aos arquivos CSS para estilizar os elemento-->
     <link rel="stylesheet" type="text/css" href="../static/css/homepage_style.css">
     <link rel="stylesheet" type="text/css" href="../static/css/modal_tarefa.css">
     <link rel="stylesheet" type="text/css" href="../static/css/menu_dot.css">
+    <!--Cria links de referência externos-->
     <link href="https://fonts.cdnfonts.com/css/catrinity-for-personal-use" rel="stylesheet">    
-    <link href="https://fonts.cdnfonts.com/css/niramit-2" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>                                  
 </head>
 <body>
+    <!--
+    Cria a div a qual irá conter os links de navegação dentro do site
+    e também irá conter o botão de logout
+    -->
     <div class="header-links">
         <ul class="nav-links">
             <li class="link"><a href="homepage">Página Inicial</a></li>
@@ -25,7 +28,9 @@
             </button>
         </form>
     </div>       
+    <!--Div container que irá conter todo o resto do conteúdo da página inicial-->
     <div class="container">
+        <!--Cria uma div header que irá conter o botão de adicionar uma tarefa-->
         <div class="header-container">
             <h1>Suas tarefas</h1>
             <button type="button" class="btn-adicionar-tarefa" id="btnAdicionarTarefa">
@@ -33,6 +38,7 @@
                 <span class="btn-adicionar-tarefa__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
             </button>
         </div>
+        <!--Cria a div que irá conter as tarefas dispostas em colunas-->
         <div class="tarefas-colunas">
             <div class="coluna-pendentes">
                 <div class="coluna-header">
@@ -57,10 +63,15 @@
             </div>
         </div>
     </div>
+    <!--Criação de uma div 'modal' que irá conter um forms para adicionar a tarefa-->
+    <!--
+        Esse form tem como padrão display none, mas irá aparecer toda vez 
+        que o botão 'Adicione uma tarefa' for acionado
+    -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <h2 style="color: white;">Adicione uma tarefa</h2>
-            <form method="POST" id="form_tarefas" class="form_tarefas" action="/homepage">
+            <form method="POST" id="form_tarefas" class="form_tarefas">
                 <span class="close" id="closeModalBtn">&times;</span>
                 <label for="form_nome_tarefa">Categoria</label>
                 <input type="text" placeholder="Qual a categoria da tarefa?" name="nomeTarefa" id="form_nome_tarefa">
@@ -72,6 +83,11 @@
             </form>
         </div>
     </div>
+     <!--Criação de uma div 'modal' que irá conter um forms para adicionar a tarefa-->
+    <!--
+        Esse form tem como padrão display none, mas irá aparecer toda vez 
+        que o botão 'Adicione uma tarefa' for acionado
+    -->
     <div id='modalEditarTarefa'class="modal">
         <div class="modal-content">
             <h2 style="color: white;">Editar tarefa</h2>
@@ -87,6 +103,7 @@
             </form>
         </div>
     </div>
+    <!--Cria links de referência aos arquivos JS-->
     <script src="../static/JavaScript/modal-adicionar-tarefas.js"></script>
     <script src="../static/JavaScript/muda_status_tarefa.js"></script>
     <script src="../static/JavaScript/exibe_tarefas.js"></script>

@@ -18,14 +18,18 @@ function moverTarefa(tarefa, destino) {
 
 // Função para excluir a tarefa 
 function excluirTarefa(tarefa){ 
+    // Exibe um alerta para confirmar a exclusão
     alerta_confirmacao = confirm("Deseja mesmo excluir a tarefa?");
+
     if (alerta_confirmacao) {
+        // Chama a função no backend para excluir a tarefa
         $.ajax({
             method: 'POST',
             url: '/excluir-tarefa',
             data: {"tarefa_excluida": tarefa.getAttribute("id_tarefa")},
             success: function(response){
-                tarefa.remove();
+                tarefa.remove(); // Elimina o elemento da página
+                alert(response.message)
             },
             error: function(error) {
                 // Verifique se o erro é uma resposta JSON com uma mensagem de erro

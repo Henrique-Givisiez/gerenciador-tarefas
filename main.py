@@ -74,7 +74,7 @@ def register():
                     senha_criptografada = sha256(senha.encode()).hexdigest()
                     
                     # Insere os valores de cadastro na tabela contas
-                    query_insert_contas = "INSERT INTO contas VALUES (%s, %s, %s)"
+                    query_insert_contas = "INSERT INTO contas(usuario, senha, email) VALUES (%s, %s, %s)"
                     cursor.execute(query_insert_contas, (usuario, senha_criptografada, email, )) 
                     mysql.commit() 
 
@@ -157,13 +157,7 @@ def logout():
 # Rota para a página inicial ('homepage')
 @app.route("/homepage", methods =['GET','POST'])
 def homepage():
-
     if logado:
-
-        if request.method == 'GET':
-            # Chama a função inicializaTarefas() para exibir as tarefas do usuário na UI
-            inicializaTarefas()
-
         return render_template("home.html") # Carrega a página inicial
     
     return redirect(url_for('login')) # Carrega a página de login 
@@ -202,7 +196,7 @@ def inicializaTarefas():
             return jsonify(dict_tarefas_usuario)
 
     except Exception as e:
-        return f"Ocorreu um erro: {e}"
+        return jsonify({"error": str(e)}), 500    
     
     finally:
         cursor.close()
@@ -215,9 +209,6 @@ def adicionaTarefa():
     # Tratamento de erros
     try:
         with mysql.cursor() as cursor:
-                    
-            if request.method == 'POST':
-
                 # Guarda os valores do formulário nas variáveis
                 nome_tarefa = request.form.get("nomeTarefa")
                 descricao_tarefa = request.form.get("descricaoTarefa")
@@ -225,7 +216,7 @@ def adicionaTarefa():
 
                 # Insere a tarefa na tabela 'tarefas' 
                 # "Session['id']" é utilizado para associar a tarefa àquele usuário por meio de uma FK definida na tabela
-                query_insert_tarefas = 'INSERT INTO tarefas VALUES (%s, %s, %s, %s,)'
+                query_insert_tarefas = 'INSERT INTO tarefas(usuario_id, nome_tarefa, descricao_tarefa, data_tarefa) VALUES (%s, %s, %s, %s)'
                 cursor.execute(query_insert_tarefas, (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
                 mysql.commit()
 
@@ -241,12 +232,11 @@ def adicionaTarefa():
                     "data": data_tarefa,
                     "ID": cursor.lastrowid
                     }
-                
                 return jsonify(tarefa_submetida)
     
     except Exception as e:
         mysql.rollback()
-        return f"Ocorreu um erro: {e}"
+        return jsonify({"error": str(e)}), 500    
     
     finally:
         cursor.close()
@@ -287,7 +277,7 @@ def editarTarefa():
                 
         except Exception as e:
             mysql.rollback()
-            return f"Ocorre um erro: {e}"
+            return jsonify({"error": str(e)}), 500      
 
         finally:
             cursor.close()
@@ -314,8 +304,8 @@ def excluirTarefa():
     
     except Exception as e:
         mysql.rollback()
-        return f"Ocorreu um erro: {e}"
-    
+        return jsonify({"error": str(e)}), 500
+        
     finally:
         cursor.close()
 
