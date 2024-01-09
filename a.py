@@ -1,3 +1,4 @@
+exit()
 # Importação de bibliotecas e módulos necessários
 from flask import Flask, render_template, request, redirect, url_for, session, redirect, jsonify
 import pymysql

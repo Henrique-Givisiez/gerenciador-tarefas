@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from hashlib import sha256
-from conn_database import get_db_connection
-from accounts import Accounts
-from tasks import Tasks
+from conn_database import Database
+
 # Cria um app com o Flask
 app = Flask(__name__)
 
@@ -14,36 +13,52 @@ app.secret_key = sha256(secret_key.encode()).hexdigest()
 host = 'localhost'
 user = 'root'
 password = 'mypassword'
-port = "5500"
+port = "5000"
 
 app.config['MYSQL_HOST'] = host
 app.config['MYSQL_PORT'] = port
 app.config['MYSQL_USER'] = user
 app.config['MYSQL_PASSWORD'] = password
 
-# Faz a conexão com a database
-conn = get_db_connection()
 
-account = Accounts()
-task = Tasks()
+database = Database()
+
+loggedin = False
 
 @app.route("/")
 def init():
-    return render_template("signup.html")
+    return redirect(url_for("signup"))
 
-@app.route("/signup", methods = ["POST"])
-def create_user():
+
+@app.route("/signup", methods = ["GET", "POST"])
+def signup():
     msg = ""
-    
-    data = request.json
-    
-    success, msg = account.create(username = data["username"], email = data["email"], password = data["password"])
-
-    if success:
-        return render_template("login.html", msg=msg)
-    
+    if request.method == "POST":   
+        success, msg = database.accounts.create(username = request.form.get("username"), email = request.form.get("email"), password = request.form.get("password"))
+        if success:
+            return redirect(url_for("login"))
+        
     return render_template("signup.html", msg=msg)
         
+
+@app.route("/login", methods = ["GET", "POST"])
+def login():
+    global loggedin
+
+    msg = ""
+    
+    if request.method == "POST":
+        data = request.json
+        success, msg = database.accounts.check_auth(email=data["email"], password=data["password"])
+        
+        if success:
+            loggedin = True
+            flash(msg)
+            return redirect(url_for("homepage"))    
+        
+    return render_template("login.html", msg=msg)
+
+
 
 
 if __name__ == "__main__":

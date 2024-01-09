@@ -1,14 +1,40 @@
-from conn_database import get_db_connection
 from hashlib import sha256
 from re import match
+from base import BaseHelper
 
-connection = get_db_connection()
 
-class Accounts:
-    def __init__(self, conn: connection, cursor = connection.cursor()) -> None:
-        self.conn = conn
-        self.cursor = cursor
+class AccountsHelper(BaseHelper):
 
+    # Check login
+    def check_auth(self, email: str, password: str):
+        msg = ""
+        success = False
+
+        # Hash password
+        hashed_password = sha256(password.encode()).hexdigest()
+
+        query_select_contas = "SELECT * FROM contas WHERE email = %s and senha = %s"
+
+        try:
+            self.cursor.execute(query_select_contas, (email, hashed_password))
+
+            loggedin = self.cursor.fetchone()
+            
+            if loggedin:
+                msg = "Seja bem vindo!"
+                success = True
+            
+            else:
+                msg = "Credencias inválidas!"
+
+            return msg, success
+        
+        except Exception as error:
+            msg = f"Ocorreu um erro: {error}"
+            return msg, success
+    
+
+        
     # Create a new user function
     def create(self, username: str, email: str, password: str):
         msg = ""
@@ -25,7 +51,7 @@ class Accounts:
             query_select_contas = "SELECT * FROM contas WHERE email = %s"
             self.cursor.execute(query_select_contas, (email))
             conta_existente = self.cursor.fetchone()
-
+            
             if conta_existente:
                 msg = "Essa conta já existe!"
             
@@ -37,7 +63,7 @@ class Accounts:
 
             elif not username or not email or not password:
                 msg = "Campos incompletos!"
-                
+
             else:
                 # Execute the query
                 self.cursor.execute(query_insert_contas, (username, email, hashed_password))
@@ -52,8 +78,7 @@ class Accounts:
             self.conn.rollback()
             msg = f"Ocorreu um erro: {error}"
             return success, msg
+    
         
-        finally:
-            self.cursor.close()
-        
-        
+    
+    
