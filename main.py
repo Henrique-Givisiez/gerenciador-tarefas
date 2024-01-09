@@ -225,7 +225,7 @@ def adicionaTarefa():
 
                 # Insere a tarefa na tabela 'tarefas' 
                 # "Session['id']" é utilizado para associar a tarefa àquele usuário por meio de uma FK definida na tabela
-                query_insert_tarefas = 'INSERT INTO tarefas VALUES (%s, %s, %s, %s,)'
+                query_insert_tarefas = "INSERT INTO tarefas(usuario_id, nome_tarefa, descricao_tarefa, data_tarefa, status_tarefa) VALUES (%s, %s, %s, %s, 'pendente')"
                 cursor.execute(query_insert_tarefas, (session['id'], nome_tarefa, descricao_tarefa, data_tarefa, )) 
                 mysql.commit()
 
@@ -239,6 +239,7 @@ def adicionaTarefa():
                     "categoria": nome_tarefa,
                     "descricao": descricao_tarefa,
                     "data": data_tarefa,
+                    "status": "pendente",
                     "ID": cursor.lastrowid
                     }
                 
