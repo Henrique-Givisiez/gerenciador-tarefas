@@ -18,6 +18,6 @@ document.getElementById("form_tarefas").addEventListener("submit", function(even
 function funcAdicionaTarefas(dado) {
     var div_pendentes_content = document.getElementById("pendentes-content");
     if (div_pendentes_content){
-        tarefasUI(dado.categoria, dado.descricao, dado.data, dado.ID);
+        tarefasUI(dado.categoria, dado.descricao, dado.data, dado.status, dado.ID);
     }
 }

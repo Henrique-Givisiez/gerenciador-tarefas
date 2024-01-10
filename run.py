@@ -36,6 +36,7 @@ def signup():
     if request.method == "POST":   
         success, msg = database.accounts.create(username = request.form.get("username"), email = request.form.get("email"), password = request.form.get("password"))
         if success:
+            flash(msg)
             return redirect(url_for("login"))
         
     return render_template("signup.html", msg=msg)

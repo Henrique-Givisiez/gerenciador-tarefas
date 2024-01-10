@@ -1,4 +1,4 @@
-function tarefasUI (categoria_tarefa, descricao_tarefa, data_tarefa, id_tarefa) {
+function tarefasUI (categoria_tarefa, descricao_tarefa, data_tarefa, status_tarefa, id_tarefa) {
             // Cria os elementos HTML 
             var div_pendentes_content = document.getElementById("pendentes-content");
             var div_tarefa_caixas = document.createElement("div");
@@ -69,10 +69,8 @@ function tarefasUI (categoria_tarefa, descricao_tarefa, data_tarefa, id_tarefa) 
             editar_tarefa.textContent = "Editar tarefa";
             excluir_tarefa.textContent = "Exclua a tarefa";
     
-            // Criação de atributos para os botões de alterar o status usando, posteriormente, 'dataset' para informar o destino da tarefa
-            muda_para_pendente.setAttribute("data-destino","pendentes");
-            muda_para_progresso.setAttribute("data-destino","progresso");
-            muda_para_concluida.setAttribute("data-destino","concluida");
+            // Criação do atributo do status da tarefa
+            div_tarefa_caixas.setAttribute("status", status_tarefa)
             
             // Definição da herança entre os elementos criados do menu
             dropdownContentDiv.appendChild(muda_para_pendente);

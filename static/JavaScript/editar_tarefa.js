@@ -5,12 +5,13 @@ closeModalEditBtn.addEventListener("click", function(){
     modalEditarTarefa.style.display = "none";
 })
 
-document.getElementById("form_editar_tarefas").addEventListener("submit", function(event){
+form_edit_tarefas = document.getElementById("form_editar_tarefas");
+
+form_edit_tarefas.addEventListener("submit", function(event){
     event.preventDefault()
-    form_edit_tarefas = document.getElementById("form_editar_tarefas");
     var formData = new FormData(form_edit_tarefas);
     formData.append("id_tarefa_editada", id_tarefa_global);
-    // Recebe os dados JSON
+
     fetch("/editar-tarefa", {
         method: "POST",
         body: formData
