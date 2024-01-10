@@ -9,6 +9,7 @@ class AccountsHelper(BaseHelper):
     def check_auth(self, email: str, password: str):
         msg = ""
         success = False
+        user_id = None
 
         # Hash password
         hashed_password = sha256(password.encode()).hexdigest()
@@ -21,13 +22,14 @@ class AccountsHelper(BaseHelper):
             loggedin = self.cursor.fetchone()
             
             if loggedin:
+                user_id = loggedin[0]
                 msg = "Seja bem vindo!"
                 success = True
             
             else:
                 msg = "Credencias inválidas!"
 
-            return msg, success
+            return user_id, msg, success
         
         except Exception as error:
             msg = f"Ocorreu um erro: {error}"
@@ -79,6 +81,12 @@ class AccountsHelper(BaseHelper):
             msg = f"Ocorreu um erro: {error}"
             return success, msg
     
-        
-    
+    # Read user 
+    def read(self, user_id: int):
+        query_select_contas = "SELECT * FROM contas WHERE id = %s"
+        try:
+            self.cursor.execute(query_select_contas, (user_id))
+            return self.cursor.fetchone()
+        except Exception as error:
+            return f"Ocorreu um erro: {error}"
     
