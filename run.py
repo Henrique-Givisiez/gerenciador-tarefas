@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, g, make_response
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from hashlib import sha256
 from conn_database import Database
 
@@ -23,14 +23,7 @@ app.config['MYSQL_PASSWORD'] = password
 
 database = Database()
 
-@app.before_request
-def load_user():
-    user_id = request.headers.get('X-User-Id')
-    if user_id:
-        user = database.accounts.read(user_id)
-        g.user = user
-    else:
-        g.user = None
+loggedin = False
 
 @app.route("/")
 def init():
@@ -52,25 +45,25 @@ def signup():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
 
+    global loggedin
 
     msg = ""
     
     if request.method == "POST":
-        user_id, success, msg = database.accounts.check_auth(email=request.form.get("email"), password=request.form.get("password"))
-        
+        user_id, msg, success = database.accounts.check_auth(email=request.form.get("email"), password=request.form.get("password"))
         if success:
-            response = make_response("user_loggedin")
-            response.headers["X-User-Id"] = str(user_id)
-            flash(msg)
-            return redirect(url_for("homepage")), response    
-        
+            loggedin = True
+            session['id'] = user_id
+            return render_template("home.html", msg=msg)
+    
     return render_template("login.html", msg=msg)
+
 
 
 @app.route("/homepage", methods = ["GET"])
 def homepage():
-    if g.user:
-        return render_template("home.html", msg=g.user)
+    if loggedin:
+        return render_template("home.html")
     flash("Você precisa estar logado!")
     return redirect(url_for("login"))
 

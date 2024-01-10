@@ -2,7 +2,6 @@ from hashlib import sha256
 from re import match
 from base import BaseHelper
 
-
 class AccountsHelper(BaseHelper):
 
     # Check login
@@ -10,17 +9,15 @@ class AccountsHelper(BaseHelper):
         msg = ""
         success = False
         user_id = None
-
         # Hash password
         hashed_password = sha256(password.encode()).hexdigest()
-
+        
         query_select_contas = "SELECT * FROM contas WHERE email = %s and senha = %s"
 
         try:
             self.cursor.execute(query_select_contas, (email, hashed_password))
 
             loggedin = self.cursor.fetchone()
-            
             if loggedin:
                 user_id = loggedin[0]
                 msg = "Seja bem vindo!"
