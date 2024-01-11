@@ -6,7 +6,7 @@ class TaskHelper(BaseHelper):
     # Create Task
     def create(self, user_id: int, task_type: str, task_description: str, task_date: str):
         success = False
-
+        msg = ""
         task_status = "pendente"
 
         query_insert_tasks = """INSERT INTO tarefas(
@@ -18,16 +18,17 @@ class TaskHelper(BaseHelper):
                 self.cursor.execute(query_insert_tasks, (user_id, task_type, task_description, task_date, task_status))
                 self.conn.commit()
                 success = True
-                return success
+                task_id = self.cursor.lastrowid
+                return success, task_id
             
             else:
                 msg = "Campos incompletos!"
-                return msg, success
+                return success, msg
                         
         
         except Exception as error:
             msg = f"Ocorreu um erro: {error}"
-            return msg, success
+            return success, msg
         
 
     # Read task
