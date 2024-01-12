@@ -1,7 +1,7 @@
 import pymysql
 
-from accounts import AccountsHelper
-
+from app.auth.helper import AccountsHelper
+from app.tasks.helper import TaskHelper
 
 def get_db_connection():
      # Cria os parâmetros para a conexão da database
@@ -25,6 +25,7 @@ class Database:
         self.connection = get_db_connection()
         self.cursor = self.connection.cursor()
         self.accounts = AccountsHelper(self.connection, self.cursor)
+        self.tasks = TaskHelper(self.connection, self.cursor)
 
     def close(self):
         self.connection.close()

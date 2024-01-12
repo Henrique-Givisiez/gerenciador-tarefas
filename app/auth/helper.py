@@ -8,7 +8,7 @@ import pymysql
 class AccountsHelper(BaseHelper):
     def __init__(self, connection: pymysql.Connection, cursor: pymysql.cursors.Cursor):
         super().__init__(connection, cursor)
-        self.task = TaskHelper()
+        self.task = TaskHelper(self.conn, self.cursor)
 
     # Check login
     def check_auth(self, email: str, password: str):
