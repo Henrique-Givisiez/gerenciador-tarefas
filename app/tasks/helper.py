@@ -7,7 +7,7 @@ class TaskHelper(BaseHelper):
     def create(self, user_id: int, task_type: str, task_description: str, task_date: str):
         success = False
         msg = ""
-        task_status = "pendente"
+        task_status = "pendente"        
 
         query_insert_tasks = """INSERT INTO tarefas(
         usuario_id, categoria_tarefa, descricao_tarefa, data_tarefa, status_tarefa)
@@ -33,6 +33,8 @@ class TaskHelper(BaseHelper):
 
     # Read task
     def read(self, task_id: int = None, user_id: int = None):
+        success = False
+        
         try:
             if task_id:
                 query_read_task = "SELECT * FROM tarefas WHERE id = %s"
@@ -44,15 +46,20 @@ class TaskHelper(BaseHelper):
                 query_read_tasks_by_user = "SELECT * FROM tarefas WHERE usuario_id = %s"
                 self.cursor.execute(query_read_tasks_by_user, (user_id))
                 user_tasks = self.cursor.fetchall()
-                return user_tasks
+                dict_tasks = {}
+                success = True
+                for task in user_tasks:
+                    dict_tasks[task[0]] = task
+
+                return success, dict_tasks
 
         except Exception as error:
             msg = f"Ocorreu um erro: {error}"
-            return msg  
+            return success, msg  
         
     
     # Update task
-    def update(self, user_id: int, new_task_type: str = None, new_task_descriprion: str = None, new_task_date: str = None, new_task_status: str = None):
+    def update(self, task_id: int, new_task_type: str = None, new_task_descriprion: str = None, new_task_date: str = None, new_task_status: str = None):
         success = False
         fields_list = []
         new_values = []
@@ -75,7 +82,7 @@ class TaskHelper(BaseHelper):
 
         # Join all existing fields to update query
         query_update_contas = "UPDATE contas SET" + ", ".join(fields_list) + "WHERE id = %s"
-        new_values.append(user_id)
+        new_values.append(task_id)
 
         try:
             # Execute the query

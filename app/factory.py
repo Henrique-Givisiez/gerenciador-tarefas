@@ -1,7 +1,8 @@
-from flask import Flask, request, g
+from flask import Flask, request, g, session
 from app.database.database import Database
 from hashlib import sha256
 from app.auth.routes import auth_bp
+from app.tasks.routes import tasks_bp
 database = Database()
 
 
@@ -18,7 +19,7 @@ def create_app():
     
     @app.before_request
     def load_user():
-        user_id = request.headers.get('X-User-Id')
+        user_id = session["id"]
         if user_id:
             user = database.auth.read(user_id)
             g.user = user
@@ -27,5 +28,6 @@ def create_app():
 
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(tasks_bp)
     
     return app

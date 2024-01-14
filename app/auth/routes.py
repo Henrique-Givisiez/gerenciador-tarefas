@@ -1,11 +1,10 @@
 from flask import Blueprint, redirect, url_for, request, render_template, session
 from app.database.database import Database
+from app.permissions_decorator import requires_login
 
 database = Database()
 
 auth_bp = Blueprint("auth", __name__)
-
-loggedin = False
 
 @auth_bp.route("/")
 def index():
@@ -27,15 +26,12 @@ def signup():
 @auth_bp.route("/login", methods = ["GET", "POST"])
 def login():
 
-    global loggedin
-
     msg_signup_success = session["msg_signup_success"]
     session["msg_signup_success"] = ""
     
     if request.method == "POST":
         user_id, msg, success = database.accounts.check_auth(email=request.form.get("email"), password=request.form.get("password"))
         if success:
-            loggedin = True
             session['id'] = user_id
             session["msg_login_success"] = msg
             return redirect(url_for(f"homepage"))
@@ -44,21 +40,14 @@ def login():
 
 
 @auth_bp.route("/homepage", methods = ["GET"])
+@requires_login
 def homepage():
-    global loggedin
-
-    if loggedin:
-        msg_login_success = session["msg_login_success"]
-        return render_template("home.html", msg=msg_login_success)
-    
-    return render_template("login.html", msg="Usuário não logado!")
+    msg_login_success = session["msg_login_success"]
+    return render_template("homepage.html", msg=msg_login_success)
 
 
 @auth_bp.route("sobre-o-criador", methods = ["GET"])
+@requires_login
 def criador_page():
-    global loggedin
+    return render_template("criador_page.html")
 
-    if loggedin:
-        return render_template("criador_page.html")
-
-    return render_template("login.html", msg="Usuário não logado!")
