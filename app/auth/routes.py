@@ -39,6 +39,17 @@ def login():
     return render_template("login.html", msg=msg_signup_success)
 
 
+@auth_bp.route("/logout", methods = ["POST"])
+def logout():   
+    try:
+        user_id = session["id"]
+        if user_id:
+            session["id"] = None
+            return render_template("homepage.html")
+    except Exception as error:
+        return f"Ocorreu um erro: {error}"
+
+
 @auth_bp.route("/homepage", methods = ["GET"])
 @requires_login
 def homepage():

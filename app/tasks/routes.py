@@ -28,7 +28,8 @@ def readTasks():
     result = database.tasks.read(user_id=user_id)
     success = result[0]
     if success:
-        return jsonify(result[1])
+        task_json = result[1]
+        return jsonify(task_json)
     
     msg = result[1]
     return render_template("homepage.html", msg=msg)

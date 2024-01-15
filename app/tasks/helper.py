@@ -19,7 +19,14 @@ class TaskHelper(BaseHelper):
                 self.conn.commit()
                 success = True
                 task_id = self.cursor.lastrowid
-                return success, task_id
+                task_created_successfully_dict ={
+                    "id": task_id,
+                    "type": task_type,
+                    "description": task_description,
+                    "date": task_date,
+                    "status": task_status
+                }
+                return success, task_created_successfully_dict
             
             else:
                 msg = "Campos incompletos!"
