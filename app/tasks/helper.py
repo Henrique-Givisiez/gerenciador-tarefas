@@ -1,4 +1,4 @@
-from app.database.base import BaseHelper
+from database.base import BaseHelper
 
 # CRUD for tasks
 class TaskHelper(BaseHelper):

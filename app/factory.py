@@ -1,13 +1,13 @@
 from flask import Flask, request, g, session
-from app.database.database import Database
+from database.database import Database
 from hashlib import sha256
-from app.auth.routes import auth_bp
-from app.tasks.routes import tasks_bp
+from auth.routes import auth_bp
+from tasks.routes import tasks_bp
 database = Database()
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder="../templates")
 
     app.config['MYSQL_HOST'] = 'localhost'
     app.config['MYSQL_PORT'] = '5500'
@@ -19,7 +19,7 @@ def create_app():
     
     @app.before_request
     def load_user():
-        user_id = session["id"]
+        user_id = request.headers.get("User-id")
         if user_id:
             user = database.auth.read(user_id)
             g.user = user

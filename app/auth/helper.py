@@ -1,7 +1,7 @@
 from hashlib import sha256
 from re import match
-from app.database.base import BaseHelper
-from app.tasks.helper import TaskHelper
+from database.base import BaseHelper
+from tasks.helper import TaskHelper
 import pymysql
 
 # CRUD accounts

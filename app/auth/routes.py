@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, url_for, request, render_template, session
-from app.database.database import Database
-from app.permissions_decorator import requires_login
+from database.database import Database
+from permissions_decorator import requires_login
+import requests
 
 database = Database()
 
@@ -8,7 +9,7 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/")
 def index():
-    return redirect(url_for("signup"))
+    return redirect(url_for("auth.signup"))
 
 
 @auth_bp.route("/signup", methods = ["GET", "POST"])
@@ -18,7 +19,7 @@ def signup():
         success, msg = database.accounts.create(username = request.form.get("username"), email = request.form.get("email"), password = request.form.get("password"))
         if success:
             session["msg_signup_success"] = msg
-            return redirect(url_for("login"))
+            return redirect(url_for("auth.login"))
         
     return render_template("signup.html", msg=msg)
 
@@ -32,9 +33,12 @@ def login():
     if request.method == "POST":
         user_id, msg, success = database.accounts.check_auth(email=request.form.get("email"), password=request.form.get("password"))
         if success:
+            url = "http://127.0.0.1.5000/login"
+            header = {"User-id": user_id}
+            response = requests.get(url=url, headers=header)
             session['id'] = user_id
             session["msg_login_success"] = msg
-            return redirect(url_for(f"homepage"))
+            return redirect(url_for(f"auth.homepage"))
     
     return render_template("login.html", msg=msg_signup_success)
 
@@ -51,14 +55,14 @@ def logout():
 
 
 @auth_bp.route("/homepage", methods = ["GET"])
-@requires_login
+@requires_login()
 def homepage():
     msg_login_success = session["msg_login_success"]
     return render_template("homepage.html", msg=msg_login_success)
 
 
-@auth_bp.route("sobre-o-criador", methods = ["GET"])
-@requires_login
+@auth_bp.route("/sobre-o-criador", methods = ["GET"])
+@requires_login()
 def criador_page():
     return render_template("criador_page.html")
 

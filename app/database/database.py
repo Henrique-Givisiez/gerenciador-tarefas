@@ -1,7 +1,7 @@
 import pymysql
 
-from app.auth.helper import AccountsHelper
-from app.tasks.helper import TaskHelper
+from auth.helper import AccountsHelper
+from tasks.helper import TaskHelper
 
 def get_db_connection():
      # Cria os parâmetros para a conexão da database

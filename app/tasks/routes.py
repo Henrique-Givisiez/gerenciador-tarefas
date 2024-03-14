@@ -1,13 +1,13 @@
 from flask import Blueprint, jsonify, request, render_template, session
-from app.database.database import Database
-from app.permissions_decorator import requires_login
+from database.database import Database
+from permissions_decorator import requires_login
 
 database = Database()
 
 tasks_bp = Blueprint("tasks", __name__)
 
 @tasks_bp.route("/create-task", methods = ["POST"])
-@requires_login
+@requires_login()
 def createTask():
     data = request.form.to_dict()
     result = database.tasks.create(user_id=session["id"], task_type=data["task_type"], 
@@ -22,7 +22,7 @@ def createTask():
 
 
 @tasks_bp.route("/homepage/read-tasks", methods=["GET"])
-@requires_login
+@requires_login()
 def readTasks():
     user_id = session["id"]
     result = database.tasks.read(user_id=user_id)
@@ -36,7 +36,7 @@ def readTasks():
 
 
 @tasks_bp.route("/update-task", methods=["PUT"])
-@requires_login
+@requires_login()
 def updateTask():
     data = request.form.to_dict()
     result = database.tasks.update(task_id=data["task_id"], new_task_type=data["new_task_type"], new_task_descriprion=data["new_task_description"],
@@ -49,7 +49,7 @@ def updateTask():
 
 
 @tasks_bp.route("/delete-task/<task_id>", methods=["DELETE"])
-@requires_login
+@requires_login()
 def deleteTask(task_id: int):
     result = database.tasks.delete(task_id=task_id)
     success = result[0]
