@@ -1,5 +1,5 @@
 // Recebe os dados JSON
-fetch('/inicializa-tarefas')
+fetch('/homepage/read-tasks')
 .then(response => response.json())
 .then(dado => {
     funcInicializaTarefas(dado);
