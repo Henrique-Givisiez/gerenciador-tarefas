@@ -25,15 +25,15 @@
   justify-content: center;
 }
 
-.close {
+.close-modal-btn {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 20px;  
 }
 
-.form_tarefas {
+.form-task {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   height: 70%;
   width: 100%;
 }
-.form_tarefas button{
+.form-task button{
   width:40%;
   height: 40px;
   margin-top: 40px;
@@ -63,22 +63,22 @@
   font-weight: bold;
   cursor: pointer;
 }
-.form_tarefas button:hover {
+.form-task button:hover {
   background-color: var(--hover-color);
 }
-.form_tarefas input{
+.form-task input{
   height: 43px;
   border-radius: 8px;
   width:75%;
 }
 
-.form_tarefas textarea{
+.form-task textarea{
   resize: none;
   border-radius: 8px;
   width:75%;
   height: 80px;
 }
 
-.form_tarefas label{
+.form-task label{
   color: white;
 }

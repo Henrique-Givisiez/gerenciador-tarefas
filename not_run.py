@@ -27,7 +27,15 @@ loggedin = False
 
 @app.route("/")
 def init():
-    return redirect(url_for("signup"))
+    query_read_tasks_by_user = "SELECT * FROM tarefas WHERE usuario_id = %s"
+    database.cursor.execute(query_read_tasks_by_user, (3))
+    user_tasks = database.cursor.fetchall()
+    dict_tasks = {}
+    for task in user_tasks:
+        dict_tasks[task[0]] = task 
+
+    print(dict_tasks)
+    return "ok"
 
 
 @app.route("/signup", methods = ["GET", "POST"])

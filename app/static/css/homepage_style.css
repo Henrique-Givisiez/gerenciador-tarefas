@@ -182,7 +182,7 @@ html, body{
 .header-container h1{
   color: rgba(95, 51, 219, 0.88);
 }
-.btn-adicionar-tarefa {
+.btn-add-task {
   position: relative;
   width: 200px;
   height: 40px;
@@ -193,11 +193,11 @@ html, body{
   box-shadow: 5px 6px 6px #bababa
 }
 
-.btn-adicionar-tarefa, .btn-adicionar-tarefa__icon, .btn-adicionar-tarefa__text {
+.btn-add-task, .btn-add-task__icon, .btn-add-task__text {
   transition: all 0.3s;
 }
 
-.btn-adicionar-tarefa .btn-adicionar-tarefa__text {
+.btn-add-task .btn-add-task__text {
   font-family: 'Niramit', sans-serif;
   font-size: 15px;
   color: #ffffff;
@@ -206,7 +206,7 @@ html, body{
   margin-bottom: 3px;
 }
 
-.btn-adicionar-tarefa .btn-adicionar-tarefa__icon {
+.btn-add-task .btn-add-task__icon {
   position: absolute;
   transform: translateX(160px);
   height: 100%;
@@ -217,32 +217,32 @@ html, body{
   justify-content: center;
 }
 
-.btn-adicionar-tarefa .svg {
+.btn-add-task .svg {
   width: 30px;
   stroke: #fff;
 }
 
-.btn-adicionar-tarefa:hover {
+.btn-add-task:hover {
   background: #342C49;
 }
 
-.btn-adicionar-tarefa:hover .btn-adicionar-tarefa__text {
+.btn-add-task:hover .btn-add-task__text {
   color: transparent;
 }
 
-.btn-adicionar-tarefa:hover .btn-adicionar-tarefa__icon {
+.btn-add-task:hover .btn-add-task__icon {
   width: 100%;
   transform: translateX(0);
 }
 
-.tarefas-colunas {
+.task-columns {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
   margin-top: 25px;
 }
 
-.coluna-header{
+.column-header{
   background-color: rgba(95, 51, 219, 0.88);
   color: #ffffff;
   width: 150px;
@@ -254,19 +254,19 @@ html, body{
   -6px -6px 10px #ffffff;
 }
 
-.coluna-header h1{
+.column-header h1{
   margin-top: 5px;
 }
 
-.coluna-pendentes{
+.pending-tasks-column{
   width: 30%;
 }
 
-.coluna-em-progresso{
+.tasks-in-progress-column{
   width: 30%;
 }
 
-.coluna-concluidas{
+.tasks-completed-column{
   width: 30%;
 }
 

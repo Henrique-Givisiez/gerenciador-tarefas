@@ -15,6 +15,6 @@ function funcInicializaTarefas(dado) {
     
     for (const chave in dado) {
         const tarefa = dado[chave];
-        tarefasUI(tarefa.categoria, tarefa.descricao, tarefa.data, tarefa.ID);
+        tarefasUI(tarefa);
     }
 }

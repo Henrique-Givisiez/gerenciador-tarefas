@@ -1,7 +1,5 @@
 from flask import Blueprint, redirect, url_for, request, render_template, session
 from database.database import Database
-from permissions_decorator import requires_login
-import requests
 
 database = Database()
 
@@ -16,7 +14,7 @@ def index():
 
 @auth_bp.route("/signup", methods = ["GET", "POST"])
 def signup():
-    if request.method == "POST":   
+    if request.method == "POST":
         success, msg= database.accounts.create(username = request.form.get("username"), email = request.form.get("email"), password = request.form.get("password"))
         if success:
             return redirect(url_for("auth.login"))
@@ -29,7 +27,7 @@ def signup():
 @auth_bp.route("/login", methods = ["GET", "POST"])
 def login():
     global logado
-    
+
     if request.method == "POST":
         user_id, msg, success = database.accounts.check_auth(email=request.form.get("email"), password=request.form.get("password"))
         if success:

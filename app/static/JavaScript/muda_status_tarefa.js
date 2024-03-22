@@ -1,8 +1,8 @@
 // Função para gerenciar a mudança de status de uma tarefa
 function moverTarefa(tarefa, destino) {
     // Verifica se o destino é uma coluna válida (pendente, em progresso, concluída)
-    if (['pendentes', 'progresso', 'concluida'].includes(destino)) {
-        const colunaDestino = document.getElementById(`${destino}-content`);
+    if (['pending', 'InProgress', 'Completed'].includes(destino)) {
+        const colunaDestino = document.getElementById(`${destino}Content`);
         
         // Verifica se a coluna de destino existe
         if (colunaDestino) {

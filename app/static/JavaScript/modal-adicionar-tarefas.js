@@ -1,7 +1,7 @@
 // Referências aos elementos
-var openModalBtn = document.getElementById("btnAdicionarTarefa");
+var openModalBtn = document.getElementById("btnAddTask");
 var closeModalBtn = document.getElementById("closeModalBtn");
-var modal = document.getElementById("myModal");
+var modal = document.getElementById("ModalAddTask");
 
 // Abrir o modal quando o botão for clicado
 openModalBtn.addEventListener("click", function() {

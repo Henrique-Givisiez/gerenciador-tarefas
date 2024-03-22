@@ -1,4 +1,5 @@
 from database.base import BaseHelper
+from time import strftime
 
 # CRUD for tasks
 class TaskHelper(BaseHelper):
@@ -7,7 +8,7 @@ class TaskHelper(BaseHelper):
     def create(self, user_id: int, task_type: str, task_description: str, task_date: str):
         success = False
         msg = ""
-        task_status = "pendente"        
+        task_status = "pending"        
 
         query_insert_tasks = """INSERT INTO tarefas(
         usuario_id, categoria_tarefa, descricao_tarefa, data_tarefa, status_tarefa)
@@ -56,6 +57,9 @@ class TaskHelper(BaseHelper):
                 dict_tasks = {}
                 success = True
                 for task in user_tasks:
+                    task = list(task)
+                    task[4] = strftime("%d/%m/%Y") 
+                    print(task)
                     dict_tasks[task[0]] = task
 
                 return success, dict_tasks
@@ -88,7 +92,7 @@ class TaskHelper(BaseHelper):
             new_values.append(new_task_status)
 
         # Join all existing fields to update query
-        query_update_contas = "UPDATE contas SET" + ", ".join(fields_list) + "WHERE id = %s"
+        query_update_contas = "UPDATE tarefas SET" + ", ".join(fields_list) + "WHERE id = %s"
         new_values.append(task_id)
 
         try:

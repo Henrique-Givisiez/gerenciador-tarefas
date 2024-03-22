@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas | Homepage</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/homepage_style.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/modal_tarefa.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/menu_dot.css">
+    <link rel="stylesheet" type="text/css" href="static/css/homepage_style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/modal_tarefa.css">
+    <link rel="stylesheet" type="text/css" href="static/css/menu_dot.css">
     <link href="https://fonts.cdnfonts.com/css/catrinity-for-personal-use" rel="stylesheet">    
     <link href="https://fonts.cdnfonts.com/css/niramit-2" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
@@ -61,7 +61,7 @@
         <div class="modal-content">
             <h2 style="color: white;">Adicione uma tarefa</h2>
             <form method="POST" id="FormAddTask" class="form-task" >
-                <span class="close-modal-btn" id="CloseModalBtn">&times;</span>
+                <span class="close-modal-btn" id="closeModalBtn">&times;</span>
                 <label for="field_task_type">Categoria</label>
                 <input type="text" placeholder="Qual a categoria da tarefa?" name="task_type">
                 <label for="field_task_description">Descrição</label>
@@ -76,11 +76,11 @@
         <div class="modal-content">
             <h2 style="color: white;">Editar tarefa</h2>
             <form method="POST" id="" class="form-task">
-                <span class="close-modal-btn" id="CloseModalBtn">&times;</span>
+                <span class="close-modal-btn" id="closeModalBtn">&times;</span>
                 <label for="field_task_type">Categoria</label>
                 <input type="text" placeholder="Qual a categoria da tarefa?" name="new_task_type" >
                 <label for="field_task_description">Descrição</label>
-                <textarea placeholder="Descreva a tarefa" type="text" rows="8" cols="30" name="new_task_description"></textarea>
+                <textarea placeholder="Descreva a tarefa" type="text" rows="8" cols="30" name="new_task_descrip tion"></textarea>
                 <label for="field_task_date">Data</label>
                 <input type="date"  name="new_task_date">
                 <button type="submit" class="btn-send-task">Enviar</button>
@@ -96,12 +96,12 @@
             <div id="closeMsgBtn" class="info__close"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20" height="20"><path fill="#393a37" d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"></path></svg></div>
         </div>
     {% endif %}
-    <script src="../static/JavaScript/modal-adicionar-tarefas.js"></script>
-    <script src="../static/JavaScript/muda_status_tarefa.js"></script>
-    <script src="../static/JavaScript/exibe_tarefas.js"></script>
-    <script src="../static/JavaScript/menu_dot.js"></script>
-    <script src="../static/JavaScript/inicializa_tarefas.js"></script>
-    <script src="../static/JavaScript/fetch_add_task.js"></script>
-    <script src="../static/JavaScript/editar_tarefa.js"></script>
+    <script src="static/JavaScript/modal-adicionar-tarefas.js"></script>
+    <script src="static/JavaScript/muda_status_tarefa.js"></script>
+    <script src="static/JavaScript/exibe_tarefas.js"></script>
+    <script src="static/JavaScript/menu_dot.js"></script>
+    <script src="static/JavaScript/inicializa_tarefas.js"></script>
+    <script src="static/JavaScript/fetch_add_task.js"></script>
+    <script src="static/JavaScript/editar_tarefa.js"></script>
 </body>
 </html>
