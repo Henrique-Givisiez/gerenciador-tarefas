@@ -12,6 +12,18 @@ function moverTarefa(tarefa, destino) {
             
             // Adiciona a tarefa à coluna de destino
             colunaDestino.appendChild(tarefa);
+            var formData = new FormData();
+            var id_tarefa = tarefa.getAttribute("id_tarefa");
+            formData.append("task_id", id_tarefa);
+            formData.append("new_task_status",destino);
+            
+            formData.append("new_task_date", 0);
+            formData.append("new_task_type", 0);
+            formData.append("new_task_description", 0);
+            fetch("/update-task", {
+                method: "PUT",
+                body: formData
+            })
         }
     }
 }
@@ -52,7 +64,6 @@ document.addEventListener('click', function (event) {
         // Busca o elemento mais próximo com a classe 'move-tarefa' para retornar a div tarefa-caixa que contém a tarefa
         const tarefa = target.closest('.tarefa-caixa');
         const destino = target.dataset.destino;
-        
         if (tarefa && destino) {
             moverTarefa(tarefa, destino);
         }

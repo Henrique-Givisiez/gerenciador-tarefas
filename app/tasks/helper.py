@@ -59,7 +59,6 @@ class TaskHelper(BaseHelper):
                 for task in user_tasks:
                     task = list(task)
                     task[4] = strftime("%d/%m/%Y") 
-                    print(task)
                     dict_tasks[task[0]] = task
 
                 return success, dict_tasks
@@ -70,29 +69,34 @@ class TaskHelper(BaseHelper):
         
     
     # Update task
-    def update(self, task_id: int, new_task_type: str = None, new_task_descriprion: str = None, new_task_date: str = None, new_task_status: str = None):
+    def update(self, data: dict):
         success = False
         fields_list = []
         new_values = []
+        task_id = data["task_id"]
+        new_task_type = data["new_task_type"]
+        new_task_description = data["new_task_description"]
+        new_task_date = data["new_task_date"]
+        new_task_status = data["new_task_status"]
 
-        if new_task_type:
+        if new_task_type != "0" and len(new_task_type)!= 0:
             fields_list.append("categoria_tarefa= %s")
             new_values.append(new_task_type)
 
-        if new_task_descriprion:
+        if new_task_description != "0" and len(new_task_description)!= 0:
             fields_list.append("descricao_tarefa = %s")
-            new_values.append(new_task_descriprion)
+            new_values.append(new_task_description)
 
-        if new_task_date:
+        if new_task_date != "0" and len(new_task_date) != 0:
             fields_list.append("data_tarefa = %s")
             new_values.append(new_task_date)
 
-        if new_task_status:
+        if new_task_status != "0" and len(new_task_status) != 0 :
             fields_list.append("status_tarefa = %s")
             new_values.append(new_task_status)
 
         # Join all existing fields to update query
-        query_update_contas = "UPDATE tarefas SET" + ", ".join(fields_list) + "WHERE id = %s"
+        query_update_contas = "UPDATE tarefas SET " + ", ".join(fields_list) + " WHERE id = %s"
         new_values.append(task_id)
 
         try:
@@ -100,7 +104,8 @@ class TaskHelper(BaseHelper):
             self.cursor.execute(query_update_contas, tuple(new_values))
             self.conn.commit()
             success = True
-            return success
+            msg = "Task Update Successfully"
+            return success, msg
 
         except Exception as error:
             msg = f"Ocorreu um erro: {error}"

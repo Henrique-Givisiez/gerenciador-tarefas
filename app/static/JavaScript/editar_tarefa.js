@@ -1,19 +1,23 @@
-var modalEditarTarefa = document.getElementById("modalEditarTarefa");
-var closeModalEditBtn = document.getElementById("closeModalEditBtn");
+var modalEditarTarefa = document.getElementById("ModalUpdateTask");
+var closeModalEditBtn = document.getElementById("closeModalBtn");
 
 closeModalEditBtn.addEventListener("click", function(){
     modalEditarTarefa.style.display = "none";
 })
 
-form_edit_tarefas = document.getElementById("form_editar_tarefas");
+form_edit_tarefas = document.getElementById("formEditTask");
 
 form_edit_tarefas.addEventListener("submit", function(event){
     event.preventDefault()
-    var formData = new FormData(form_edit_tarefas);
-    formData.append("id_tarefa_editada", id_tarefa_global);
+    var formData = new FormData();
+    formData.append("task_id", id_tarefa_global);
+    formData.append("new_task_type", form_edit_tarefas.elements[0].value);
+    formData.append("new_task_description", form_edit_tarefas.elements[1].value);
+    formData.append("new_task_date", form_edit_tarefas.elements[2].value);
+    formData.append("new_task_status", 0);
 
-    fetch("/editar-tarefa", {
-        method: "POST",
+    fetch("/update-task", {
+        method: "PUT",
         body: formData
     })
     .then(response => response.json())

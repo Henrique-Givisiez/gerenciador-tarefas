@@ -42,12 +42,12 @@ def readTasks():
 @tasks_bp.route("/update-task", methods=["PUT"])
 def updateTask():
     data = request.form.to_dict()
-    result = database.tasks.update(task_id=data["task_id"], new_task_type=data["new_task_type"], new_task_descriprion=data["new_task_description"],
-                                   new_task_date=data["new_task_date"], new_task_status=data["new_task_status"])
+    result = database.tasks.update(data=data)
     success = result[0]                                   
-    if success:
-        return success
     msg = result[1]
+    if success:
+        print(msg)
+        
     return render_template("homepage.html", msg=msg)
 
 

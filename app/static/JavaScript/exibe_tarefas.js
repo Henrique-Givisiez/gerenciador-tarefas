@@ -59,7 +59,12 @@ function tarefasUI (dado) {
             muda_para_concluida.textContent = 'Alterar para concluida';
             editar_tarefa.textContent = "Editar tarefa";
             excluir_tarefa.textContent = "Exclua a tarefa";
-        
+            
+            // Criação de atributos para os botões de alterar o status usando, posteriormente, 'dataset' para informar o destino da tarefa
+            muda_para_pendente.setAttribute("data-destino","pending");
+            muda_para_progresso.setAttribute("data-destino","InProgress");
+            muda_para_concluida.setAttribute("data-destino","Completed");
+             
             div_task_box.setAttribute("status", dado[5])
             
             dropdownContentDiv.appendChild(muda_para_pendente);
