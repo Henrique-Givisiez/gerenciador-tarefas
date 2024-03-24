@@ -67,9 +67,9 @@ def homepage():
 
 
 @auth_bp.route("/sobre-o-criador", methods = ["GET"])
-def criador_page():
+def criadorPage():
     global logado
     if logado:
-        return render_template("criador_page.html")
+        return render_template("sobre-o-criador.html")
 
     return redirect(url_for(f"auth.login"))

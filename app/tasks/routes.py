@@ -13,11 +13,11 @@ def createTask():
         result = database.tasks.create(user_id=session["id"], task_type=data["task_type"], 
                                     task_description=data["task_description"], task_date=data["task_date"])
         success = result[0]
-        if success:
-            tasks_data = result[1]
-            return jsonify(tasks_data)
-        
         msg = result[1]
+        if success:
+            print(msg)
+            return jsonify({"status": msg, "success": success})
+        
         return render_template("homepage.html", msg=msg)
 
     return redirect(url_for(f"auth.login"))
@@ -51,12 +51,16 @@ def updateTask():
     return render_template("homepage.html", msg=msg)
 
 
-@tasks_bp.route("/delete-task/<task_id>", methods=["DELETE"])
-def deleteTask(task_id: int):
+@tasks_bp.route("/delete-task", methods=["DELETE"])
+def deleteTask():
+    data=request.form.to_dict()
+    task_id = data["task_id"]
+    print(task_id)
     result = database.tasks.delete(task_id=task_id)
     success = result[0]
     if success:
-        return success
+        print(success)
+        
     msg = result[1]
     return render_template("homepage.html", msg=msg)
     

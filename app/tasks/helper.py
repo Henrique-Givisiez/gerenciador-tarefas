@@ -19,15 +19,8 @@ class TaskHelper(BaseHelper):
                 self.cursor.execute(query_insert_tasks, (user_id, task_type, task_description, task_date, task_status))
                 self.conn.commit()
                 success = True
-                task_id = self.cursor.lastrowid
-                task_created_successfully_dict ={
-                    "id": task_id,
-                    "type": task_type,
-                    "description": task_description,
-                    "date": task_date,
-                    "status": task_status
-                }
-                return success, task_created_successfully_dict
+                msg = "Tarefa adicionada com sucesso!"
+                return success, msg
             
             else:
                 msg = "Campos incompletos!"
@@ -134,3 +127,5 @@ class TaskHelper(BaseHelper):
             self.conn.rollback()
             msg = f"Ocorreu um erro: {error}"
             return msg, success
+        
+        
