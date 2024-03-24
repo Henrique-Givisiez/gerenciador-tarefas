@@ -1,68 +1,63 @@
-from hashlib import sha256
-from re import match
-from database.base import BaseHelper
-from tasks.helper import TaskHelper
-import pymysql
+from hashlib import sha256  # Importa a função sha256 do módulo hashlib
+from re import match  # Importa a função match do módulo re para fazer comparações de padrões
+from database.base import BaseHelper  # Importa a classe BaseHelper do módulo database.base
+from tasks.helper import TaskHelper  # Importa a classe TaskHelper do módulo tasks.helper
+import pymysql  # Importa o módulo pymysql para interagir com o banco de dados MySQL
 
-# CRUD accounts
 class AccountsHelper(BaseHelper):
     def __init__(self, connection: pymysql.Connection, cursor: pymysql.cursors.Cursor):
         super().__init__(connection, cursor)
-        self.task = TaskHelper(self.conn, self.cursor)
+        self.task = TaskHelper(self.conn, self.cursor)  # Cria uma instância de TaskHelper para manipular tarefas relacionadas ao usuário
 
-    # Check login
+    # Checa o login
     def check_auth(self, email: str, password: str):
-        msg = ""
-        success = False
-        user_id = None
-        # Hash password
+        msg = ""  # Mensagem de retorno
+        success = False  # Indica se o login foi bem-sucedido
+        user_id = None  # ID do usuário logado
+        # Hash da senha
         hashed_password = sha256(password.encode()).hexdigest()
-        
-        query_select_contas = "SELECT * FROM contas WHERE email = %s and senha = %s"
+
+        query_select_contas = "SELECT * FROM contas WHERE email = %s and senha = %s"  # Query para selecionar a conta com o email e senha fornecidos
 
         try:
-            self.cursor.execute(query_select_contas, (email, hashed_password))
-
-            user = self.cursor.fetchone()
+            self.cursor.execute(query_select_contas, (email, hashed_password))  # Executa a query com os parâmetros
+            user = self.cursor.fetchone()  # Obtém o resultado da query
             if user:
-                user_id = user[0]
-                username = user[1]
-                msg = f"Seja bem vindo, {username}!"
-                success = True
-            
+                user_id = user[0]  # Obtém o ID do usuário
+                username = user[1]  # Obtém o nome de usuário
+                msg = f"Seja bem vindo, {username}!"  # Mensagem de boas-vindas
+                success = True  # Indica que o login foi bem-sucedido
             else:
-                msg = "Credencias inválidas!"
+                msg = "Credenciais inválidas!"  # Mensagem de erro se as credenciais estiverem incorretas
 
-            return user_id, msg, success
+            return user_id, msg, success  # Retorna o ID do usuário, a mensagem e o status de sucesso
         
         except Exception as error:
-            msg = f"Ocorreu um erro: {error}"
-            return msg, success
-    
+            msg = f"Ocorreu um erro: {error}"  # Mensagem de erro em caso de exceção
+            return msg, success  # Retorna a mensagem de erro e o status de sucesso
 
-    # Check if user have tasks
+    # Checa se o usuário possui tarefas
     def user_have_tasks(self, user_id):
-        result = self.task.read(user_id=user_id)
+        result = self.task.read(user_id=user_id)  
         if result:
             return True
         return False
     
-        
-    # Create a new user function
+    # Cria um novo usuário
     def create(self, username: str, email: str, password: str):
-        msg = ""
-        success = False
+        msg = ""  # Mensagem de retorno
+        success = False  # Indica se a criação da conta foi bem-sucedida
 
-        # Hash password
+        # Hash da senha
         hashed_password = sha256(password.encode()).hexdigest()
 
-        # Query to insert user in database
+        # Query para inserir um novo usuário no banco de dados
         query_insert_contas = "INSERT INTO contas(usuario, email, senha) VALUES (%s, %s, %s)"
 
         try:
-            # Check if account already exists 
+            # Verifica se a conta já existe
             query_select_contas = "SELECT * FROM contas WHERE email = %s"
-            self.cursor.execute(query_select_contas, (email))
+            self.cursor.execute(query_select_contas, (email,))
             conta_existente = self.cursor.fetchone()
             
             if conta_existente:
@@ -78,7 +73,7 @@ class AccountsHelper(BaseHelper):
                 msg = "Campos incompletos!"
 
             else:
-                # Execute the query
+                # Executa a query para inserir o novo usuário
                 self.cursor.execute(query_insert_contas, (username, email, hashed_password))
                 self.conn.commit()
                 msg = "Conta criada com sucesso!"
@@ -87,27 +82,25 @@ class AccountsHelper(BaseHelper):
             return success, msg
                 
         except Exception as error:
-            # Cancel the commit
+            # Cancela a transação e retorna a mensagem de erro
             self.conn.rollback()
             msg = f"Ocorreu um erro: {error}"
             return success, msg
-    
 
-    # Read user 
+    # Função para ler usuário
     def read(self, user_id: int):
-        query_select_contas = "SELECT * FROM contas WHERE id = %s"
+        query_select_contas = "SELECT * FROM contas WHERE id = %s"  # Query para selecionar o usuário pelo ID
         try:
-            self.cursor.execute(query_select_contas, (user_id))
-            return self.cursor.fetchone()
+            self.cursor.execute(query_select_contas, (user_id,))  # Executa a query com o ID do usuário
+            return self.cursor.fetchone()  # Retorna o usuário encontrado
         except Exception as error:
-            return f"Ocorreu um erro: {error}"
-    
+            return f"Ocorreu um erro: {error}"  # Retorna a mensagem de erro em caso de exceção
 
-    # Update user
+    # Atualiza dados do usuário
     def update(self, user_id: int, new_username: str = None, new_email: str = None, new_password: str = None):
-        success = False
-        fields_list = []
-        new_values = []
+        success = False  # Indica se a atualização foi bem-sucedida
+        fields_list = []  # Lista de campos a serem atualizados
+        new_values = []  # Novos valores dos campos
 
         if new_username:
             fields_list.append("usuario = %s")
@@ -122,42 +115,43 @@ class AccountsHelper(BaseHelper):
             fields_list.append("senha = %s")
             new_values.append(hashed_password)
 
-        # Join all existing fields to update query
-        query_update_contas = "UPDATE contas SET" + ", ".join(fields_list) + "WHERE id = %s"
+        # Junta todos os campos existentes na query de atualização
+        query_update_contas = "UPDATE contas SET" + ", ".join(fields_list) + " WHERE id = %s"
         new_values.append(user_id)
 
         try:
-            # Execute the query
+            # Executa a query de atualização
             self.cursor.execute(query_update_contas, tuple(new_values))
             self.conn.commit()
             success = True
-            return success
+            return success  # Retorna o status de sucesso
 
         except Exception as error:
-            print(f"Ocorreu um erro: {error}")
-            self.conn.rollback()
-            return success
-        
-    
-    # Delete user
+            print(f"Ocorreu um erro: {error}")  # Exibe a mensagem de erro
+            self.conn.rollback()  # Cancela a transação
+            return success  # Retorna o status de sucesso
+
+    # Deleta usuário
     def delete(self, user_id: int):
-        query_delete_contas = "DELETE FROM contas WHERE id = %s"
-        success = False
-        msg = ""
+        query_delete_contas = "DELETE FROM contas WHERE id = %s"  # Query para deletar o usuário pelo ID
+        success = False  # Indica se a exclusão foi bem-sucedida
+        msg = ""  # Mensagem de retorno
 
         try:
-            # Call function "user_have_tasks" to check tasks. If true, delete tasks from user 
+            # Verifica se o usuário possui tarefas
             if not self.user_have_tasks(user_id):
-                self.cursor.execute(query_delete_contas, (user_id))
+                # Deleta o usuário
+                self.cursor.execute(query_delete_contas, (user_id,))
                 self.conn.commit()
                 success = True
                 return success
         
             else:
+                # Se o usuário tiver tarefas, exclui as tarefas antes de excluir o usuário
                 self.task.delete(user_id=user_id)
-                return self.delete(user_id)
-            
+                return self.delete(user_id)  # Recursivamente chama a função delete para excluir o usuário novamente
+
         except Exception as error:
-            msg = f"Ocorreu um erro {error}"
-            self.conn.rollback()
-            return msg, success
+            msg = f"Ocorreu um erro {error}"  # Mensagem de erro em caso de exceção
+            self.conn.rollback()  # Cancela a transação
+            return msg, success  # Retorna a mensagem de erro e o status de sucesso
