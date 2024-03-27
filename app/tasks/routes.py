@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request, render_template, session, redirect, url_for  # Importa os módulos necessários do Flask
 from database.database import Database  # Importa a classe Database do módulo database.database
-from auth.routes import logado  # Importa a variável logado do módulo auth.routes
 
 database = Database()  # Cria uma instância da classe Database
 
@@ -48,14 +47,17 @@ def updateTask():
         
     return render_template("homepage.html", msg=msg)  # Renderiza o template da página inicial com a mensagem de retorno
 
-@tasks_bp.route("/delete-task", methods=["DELETE"])
+@tasks_bp.route("/delete-task", methods=["POST"])
 def deleteTask():
-    data = request.form.to_dict()  # Obtém os dados do formulário
-    task_id = data["task_id"]  # Obtém o ID da tarefa
-    result = database.tasks.delete(task_id=task_id)  # Deleta a tarefa
-    success = result[0]  # Indica se a operação foi bem-sucedida
-    if success:
-        print(success)
-        
-    msg = result[1]  # Mensagem de retorno
-    return render_template("homepage.html", msg=msg)  # Renderiza o template da página inicial com a mensagem de retorno
+    try:
+        data = request.form.to_dict()  # Obtém os dados do formulário
+        task_id = data["task_id"]  # Obtém o ID da tarefa
+        result = database.tasks.delete(task_id=task_id)  # Deleta a tarefa
+        success = result # Indica se a operação foi bem-sucedida
+        if success:
+            return jsonify(success)
+            
+        return render_template("homepage.html")  # Renderiza o template da página inicial com a mensagem de retorno
+    
+    except Exception as err:
+        return f"Ocorreu um erro: {err}"

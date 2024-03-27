@@ -127,4 +127,4 @@ class TaskHelper(BaseHelper):
         except Exception as error:
             self.conn.rollback()  # Cancela a transação em caso de erro
             msg = f"Ocorreu um erro: {error}"  # Mensagem de erro em caso de exceção
-            return msg, success  # Retorna a mensagem de erro e o status de sucesso
+            return success  # Retorna a mensagem de erro e o status de sucesso

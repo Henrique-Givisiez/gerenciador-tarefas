@@ -195,26 +195,35 @@ function moverTarefa(tarefa, destino) {
 
 // Função para excluir a tarefa 
 function excluirTarefa(tarefa){ 
-    alerta_confirmacao = confirm("Deseja mesmo excluir a tarefa?");
-    if (alerta_confirmacao) {
-        var formData = new FormData();
-        formData.append("task_id", tarefa.getAttribute("id_tarefa"));
-        fetch("/delete-task",{
-            method: "DELETE",
-            body: formData
-        })
-        location.reload(); 
-    };   
+
+    var formData = new FormData();
+    formData.append("task_id", tarefa.getAttribute("id_tarefa"));
+    fetch("/delete-task",{
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data == true){
+            tarefa.parentElement.removeChild(tarefa);
+        } 
+    })
 }
 
 
 
 var modalEditarTarefa = document.getElementById("ModalUpdateTask");
-var closeModalEditBtn = document.getElementById("closeModalBtn");
+var closeModalEditBtn = document.getElementById("closeModalEditBtn");
 
 closeModalEditBtn.addEventListener("click", function(){
     modalEditarTarefa.style.display = "none";
 })
+
+window.addEventListener("click", function(event) {
+    if (event.target == modalEditarTarefa) {
+        modalEditarTarefa.style.display = "none";
+    }
+});
 
 form_edit_tarefas = document.getElementById("formEditTask");
 
