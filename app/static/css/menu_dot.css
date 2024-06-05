@@ -1,0 +1,73 @@
+/* Estilo padrão do dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Estilize o botão do dropdown */
+.menu {
+background-color: rgba(95, 51, 219, 0);
+color: white;
+border: none;
+cursor: pointer;
+height: 15px;
+justify-content: center;
+align-items: center;
+}
+
+.menu:hover {
+color: #ddd;
+}
+/* Estilize o conteúdo do dropdown (inicialmente escondido) */
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #ff0000;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+left: 0;
+bottom: 0;
+}
+
+/* Estilo dos links no dropdown */
+.move-tarefa {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+border: none;
+width: 100%;
+}
+
+.editar-tarefa {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+border: none;
+width: 100%;
+}
+/* Quando o cursor passa por cima dos links, mude a cor de fundo */
+.move-tarefa:hover {
+background-color: #ddd;
+}
+
+.excluir-tarefa {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+border: none;
+width: 100%;
+}
+
+.excluir-tarefa:hover {
+background-color: rgb(235, 0, 0);
+color: white;
+}
+
+/* Mostrar o dropdown quando o botão é clicado */
+.show {
+display: block;
+}

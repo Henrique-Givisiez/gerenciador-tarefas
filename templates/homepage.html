@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas | Homepage</title>
+    <link rel="stylesheet" type="text/css" href="static/css/homepage_style.css">
+    <link rel="stylesheet" type="text/css" href="static/css/modal_tarefa.css">
+    <link rel="stylesheet" type="text/css" href="static/css/menu_dot.css">
+    <link rel="stylesheet" type="text/css" href="static/css/msg_box.css">
+    <link href="https://fonts.cdnfonts.com/css/catrinity-for-personal-use" rel="stylesheet">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+</head>
+<body>
+    <div class="header-links" id="headerLinks">
+        <ul class="nav-links">
+            <li class="link"><a href="homepage">Página Inicial</a></li>
+            <li class="link"><a href="sobre-o-criador">Sobre o criador</a></li>
+        </ul>
+        <h1 id="welcome-header"></h1>
+        <form id="formLogout" action="/logout" method="POST">
+            <button class="logout" type="submit">
+                <div class="sign-logout"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>            
+                <div class="text">Logout</div>
+            </button>
+        </form>
+    </div>       
+    <div class="container">
+        <div class="header-container">
+            <div class="alert" id="failAlertMsgLogin">
+                <span class="closeBtnAlert">&times;</span>  
+                <strong></strong>
+            </div>
+            <div class="alert success" id="successAlertMsgLogin">
+                <span class="closeBtnAlert">&times;</span>  
+                <strong</strong>
+            </div>
+            <h1>Suas tarefas</h1>
+            <button type="button" class="btn-add-task" id="btnAddTask">
+                <span class="btn-add-task__text">Adicione uma tarefa</span>
+                <span class="btn-add-task__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+            </button>
+        </div>
+        <div class="task-columns">
+            <div class="pending-tasks-column">
+                <div class="column-header">
+                    <h1>Pendente</h1>
+                </div>
+                <div class="pending-content" id="pendingContent">                        
+                </div>    
+            </div>
+            <div class="tasks-in-progress-column">
+                <div class="column-header">
+                    <h1>Progresso</h1>
+                </div>
+                <div class="in-progress-content" id="InProgressContent">
+                </div>
+            </div>
+            <div class="tasks-completed-column">
+                <div class="column-header">
+                    <h1>Concluído</h1>
+                </div>
+                <div class="completed-content" id="CompletedContent">
+                </div>   
+            </div>
+        </div>
+    </div>
+    <div id="ModalAddTask" class="modal">
+        <div class="modal-content">
+            <h2 style="color: white;">Adicione uma tarefa</h2>
+            <form method="POST" id="FormAddTask" class="form-task" >
+                <span class="close-modal-btn" id="closeModalBtn">&times;</span>
+                <label for="field_task_type">Categoria</label>
+                <input type="text" placeholder="Qual a categoria da tarefa?" name="task_type">
+                <label for="field_task_description">Descrição</label>
+                <textarea placeholder="Descreva a tarefa" type="text" rows="8" cols="30" name="task_description"></textarea>
+                <label for="field_task_date">Data</label>
+                <input type="date"  name="task_date">
+                <button type="submit" class="btn-send-task">Enviar</button>
+            </form>
+        </div>
+    </div>
+    <div id='ModalUpdateTask'class="modal">
+        <div class="modal-content">
+            <h2 style="color: white;">Editar tarefa</h2>
+            <form method="POST" id="formEditTask" class="form-task">
+                <span class="close-modal-btn" id="closeModalEditBtn">&times;</span>
+                <label for="field_task_type">Categoria</label>
+                <input type="text" placeholder="Qual a categoria da tarefa?" name="new_task_type" >
+                <label for="field_task_description">Descrição</label>
+                <textarea placeholder="Descreva a tarefa" type="text" rows="8" cols="30" name="new_task_descrip tion"></textarea>
+                <label for="field_task_date">Data</label>
+                <input type="date"  name="new_task_date">
+                <button type="submit" class="btn-send-task">Enviar</button>
+            </form>
+        </div>
+    </div>  
+    <script src="static/JavaScript/homepage/modal-adicionar-tarefas.js"></script>
+    <script src="static/JavaScript/homepage/CRUD_frontend.js"></script>
+    <script src="static/JavaScript/homepage/menu_dot.js"></script>
+    <script src="static/JavaScript/homepage/manage_alert.js"></script>
+    
+</body>
+</html>

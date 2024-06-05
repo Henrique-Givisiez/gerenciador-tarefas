@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    <link rel="stylesheet" type="text/css" href="static/css/login_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="alert" id="failAlertMsgLogin">
+            <span class="closeBtnAlert">&times;</span>  
+            <strong></strong>
+        </div>
+        <div class="form-box">
+            <form id="formLogin" class="form" method="POST">
+                <span class="title">Login</span>
+                <span class="subtitle">Insira seu email e sua senha.</span>
+                <div class="form-container">
+                        <input type="email" class="input" placeholder="Email" name="email">
+                        <input type="password" class="input" placeholder="Senha" name="password">
+                </div>
+                <button type="submit" value="submit">Entrar</button>
+            </form>
+            <div class="form-section">
+                <p>Ainda não possui uma conta? Cadastre-se <a href="/signup">aqui</a> </p>
+            </div>
+        </div>
+    </div>
+    <script src="static/JavaScript/auth/login.js"></script>
+</body> 
+</html>

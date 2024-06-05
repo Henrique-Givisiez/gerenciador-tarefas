@@ -1,0 +1,352 @@
+*{
+padding: 0;
+margin: 0;
+outline: none;
+border:none;
+box-sizing: border-box;
+font-family: 'Catrinity', sans-serif;   
+}
+
+a{
+text-decoration: none;
+}
+
+html, body{
+height: 100%;
+margin: 0;
+border: 0px solid #FFF;
+background: #342C49;
+}
+/* ----------------------------------------------------------------------------------- */  
+/*  Seção 1 - Edição do header que conterá: os links de navegação e o botão de logout  */
+/* ----------------------------------------------------------------------------------- */  
+.header-links{
+background-color: rgb(255, 255, 255);
+width: 100%;
+height: 70px;
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+justify-content: space-between;
+align-items: center;
+align-content: normal;
+
+}
+
+.header-links .nav-links{
+background-color: rgb(255, 255, 255);
+height: 100%;
+list-style: none;
+display: flex;
+align-items: center;
+}
+
+.header-links .nav-links .link a{
+position: relative;
+color: rgba(95, 51, 219, 0.88);
+font-size: 27px;
+}
+
+.header-links .nav-links li {
+height: 70%;
+display: flex;
+align-items: center;
+}
+.header-links .nav-links li:nth-child(1) {
+margin-left: 30px;
+}
+.header-links .nav-links li:nth-child(2) {
+margin-left: 15px;
+border-left: 2px solid #342C49;
+}
+
+.header-links .nav-links li:nth-child(2) a{
+margin-left: 15px;
+} 
+
+.header-links #welcome-header{
+    position: absolute;
+    top: 15px;
+    left: 700px
+}
+
+.link a::after{
+content: "";
+position: absolute;
+height: 2px;
+width: 0;
+bottom: 0;
+left: 0;
+background-color: #342C49;
+transition: all 0.3s ease;
+}
+
+.link a:hover::after{
+width: 70%;
+}
+
+.logout{
+--black: #000000;
+--ch-black: #141414;
+--eer-black: #1b1b1b;
+--night-rider: #2e2e2e;
+--white: #ffffff;
+--af-white: #f3f3f3;
+--ch-white: #e1e1e1;
+display: flex;
+align-items: center;
+justify-content: flex-start;
+width: 45px;
+height: 45px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+position:relative;
+overflow: hidden;
+transition-duration: .3s;
+background-color: white;
+margin-right: 30px;
+}
+
+.sign-logout {
+width: 100%;
+transition-duration: .3s;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.sign-logout svg {
+width: 17px;
+}
+
+.sign-logout svg path {
+fill: var(--night-rider);
+}
+
+.text {
+position: absolute;
+right: 0%;
+width: 0%;
+opacity: 0;
+color: var(--night-rider);
+font-size: 1.2em;
+font-weight: 600;
+transition-duration: .3s;
+}
+
+.logout:hover {
+width: 125px;
+border-radius: 5px;
+transition-duration: .3s;
+}
+
+.logout:hover .sign-logout {
+width: 30%;
+transition-duration: .3s;
+padding-left: 20px;
+}
+
+.logout:hover .text {
+opacity: 1;
+width: 70%;
+transition-duration: .3s;
+padding-right: 10px;
+}
+
+.logout:active {
+transform: translate(2px ,2px);
+}
+
+/* ----------------------------------------------------------------------------------------------------- */  
+/*  Seção 2 - Edição do container principal que irá exibir as tarefas, o form de adição de tarefas, etc  */
+/* ----------------------------------------------------------------------------------------------------- */  
+
+.container {
+display: flex;
+flex-direction: column;
+flex-wrap: nowrap;
+justify-content: normal;
+align-items: normal;
+align-content: normal;
+min-height: 100%;
+margin: 25px;
+border-radius: 8px;
+background-color: #ffffff;
+padding-bottom: 30px;
+}
+
+.header-container{
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+height: 60px;
+margin-left: 20px;
+margin-right: 20px;
+}
+
+.header-container h1{
+color: rgba(95, 51, 219, 0.88);
+}
+.btn-add-task {
+position: relative;
+width: 200px;
+height: 40px;
+cursor: pointer;
+display: flex;
+align-items: center;
+background-color: #342C49;
+box-shadow: 5px 6px 6px #bababa
+}
+
+.btn-add-task, .btn-add-task__icon, .btn-add-task__text {
+transition: all 0.3s;
+}
+
+.btn-add-task .btn-add-task__text {
+font-family: 'Niramit', sans-serif;
+font-size: 15px;
+color: #ffffff;
+font-weight: 600;
+margin-left: 9px;
+margin-bottom: 3px;
+}
+
+.btn-add-task .btn-add-task__icon {
+position: absolute;
+transform: translateX(160px);
+height: 100%;
+width: 20%;
+background-color: rgba(95, 51, 219, 0.88);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.btn-add-task .svg {
+width: 30px;
+stroke: #fff;
+}
+
+.btn-add-task:hover {
+background: #342C49;
+}
+
+.btn-add-task:hover .btn-add-task__text {
+color: transparent;
+}
+
+.btn-add-task:hover .btn-add-task__icon {
+width: 100%;
+transform: translateX(0);
+}
+
+.task-columns {
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+margin-top: 25px;
+}
+
+.column-header{
+background-color: rgba(95, 51, 219, 0.88);
+color: #ffffff;
+width: 150px;
+display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 12px;
+box-shadow: 4px 6px 6px #bababa,
+-6px -6px 10px #ffffff;
+}
+
+.column-header h1{
+margin-top: 5px;
+}
+
+.pending-tasks-column{
+width: 30%;
+}
+
+.tasks-in-progress-column{
+width: 30%;
+}
+
+.tasks-completed-column{
+width: 30%;
+}
+
+.tarefa-caixa{
+display:flex;
+flex-direction: column;
+flex-wrap: wrap;
+justify-content: space-between;
+align-items: flex-start;
+align-content: stretch;
+background-color: rgba(95, 51, 219, 0.88);
+color: white;
+padding: 7px 20px;
+border-radius: 8px;
+height: 160px;
+margin-top: 30px;
+width: 60%;
+}
+
+.tarefa-caixa:hover{
+transform: translate(-3px);
+box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.23);
+}
+
+.tarefa-header{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+font-size: 23px;
+width: 100%;
+}
+
+.tarefa-content{
+margin: 2px 0 15px;
+font-size: 17px; 
+font-weight: 400; 
+}
+
+.tarefa-footer{
+width: 100%;
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
+font-size: 14px;
+}
+
+.alert {
+display: none;
+position: absolute; /* ou 'fixed' se você quer que fique sempre visível ao rolar a página */
+top: 0;
+right: 0; 
+padding: 20px;
+background-color: #f44336;
+color: white;
+opacity: 1;
+transition: opacity 0.6s;
+margin-bottom: 15px;
+border-radius: 15px;
+}
+
+.closeBtnAlert {
+margin-left: 15px;
+color: white;
+font-weight: bold;
+float: right;
+font-size: 22px;
+line-height: 20px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.closeBtnAlert:hover {
+color: black;
+}
+
+.alert.success {background-color: #04AA6D;}

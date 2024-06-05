@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Cadastro</title>
+    <link rel="stylesheet" type="text/css" href="static/css/register_style.css">
+</head>
+<body>
+    <div class="alert" id="failAlertMsgSignup">
+        <span class="closeBtnAlert">&times;</span>  
+        <strong></strong>
+    </div>
+    <div class="form-box">
+        <form class="form" id="form_signup">
+            <span class="title">Registrar</span>
+            <span class="subtitle">Crie uma conta com seu email.</span>
+            <div class="form-container">
+                    <input type="text" class="input" placeholder="Usuário" name="username">
+                    <input type="email" class="input" placeholder="Email" name="email">
+                    <input type="password" class="input" placeholder="Senha" name="password">
+            </div>
+            <button type="submit" value="submit">Criar conta</button>
+        </form>
+        <div class="form-section">
+          <p>Já possui uma conta? Faça seu login por <a href="/login">aqui</a> </p>
+        </div>
+    </div>
+    <script src="static/JavaScript/auth/signup.js"></script>
+    </html>
