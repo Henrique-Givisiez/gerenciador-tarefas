@@ -68,4 +68,22 @@ def criadorPage():
 
     except KeyError:
         return redirect(url_for("auth.login"))  # Redireciona para a página de login caso o usuário não esteja logado
-  
+
+@auth_bp.route("/profile-page", methods=["GET"])
+def updateAccount():
+    try:
+        if session["id"]:
+            return render_template("profile.html") # Renderiza a página profile se o usuário estiver logado
+    except KeyError:
+        return redirect(url_for("auth.login")) # Redireciona para a página de login caso o usuário não esteja logado
+
+@auth_bp.route("/read-user-data", methods=["POST"])
+def read_user():
+    try:
+        if session["id"]:
+            user_id = session["id"]
+            user_data = database.accounts.read(user_id=user_id)
+            username, email = user_data[1], user_data[-1]
+            return jsonify({"username": username, "email": email})
+    except KeyError:
+        return redirect(url_for("auth.login"))
