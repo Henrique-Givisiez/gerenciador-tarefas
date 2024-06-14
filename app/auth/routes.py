@@ -11,7 +11,6 @@ def index():
     return redirect(url_for("auth.signup"))  # Redireciona para a rota de cadastro
 
 @auth_bp.route("/signup", methods=["GET", "POST"])
-
 def signup():
     try:
         if request.method == "POST":

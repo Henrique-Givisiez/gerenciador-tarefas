@@ -20,6 +20,7 @@ class TaskHelper(BaseHelper):
                 self.cursor.execute(query_insert_tasks, (user_id, task_type, task_description, task_date, task_status))
                 self.conn.commit()
                 success = True
+                msg = "Tarefa criada com sucesso"
             else:
                 msg = "Campos incompletos!"
 

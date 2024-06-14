@@ -15,7 +15,7 @@ def create_app():
     app.config['MYSQL_USER'] = 'root'
     app.config['MYSQL_PASSWORD'] = 'mypassword'
     app.config['MYSQL_DB'] = 'bd_gerenciador_de_tarefas'
-    
+     
     secret_key = 'chave super secreta'  # Chave secreta para a aplicação
     app.secret_key = sha256(secret_key.encode()).hexdigest()  # Gera a chave secreta e a associa à aplicação
 

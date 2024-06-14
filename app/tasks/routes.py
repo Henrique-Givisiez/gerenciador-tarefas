@@ -7,15 +7,16 @@ tasks_bp = Blueprint("tasks", __name__)  # Cria um blueprint chamado "tasks"
 
 @tasks_bp.route("/create-task", methods=["POST"])
 def createTask():
-    if session["id"]:  # Verifica se o usuário está logado
-        data = request.form.to_dict()  # Obtém os dados do formulário
-        result = database.tasks.create(user_id=session["id"], task_type=data["task_type"], 
-                                       task_description=data["task_description"], task_date=data["task_date"])  # Cria uma nova tarefa
-        success = result[0]  # Indica se a operação foi bem-sucedida
-        msg = result[1]  # Mensagem de retorno
-        return jsonify({"status": msg, "success": success})  # Retorna um JSON com o status e o sucesso da operação
-
-    return redirect(url_for("auth.login"))  # Redireciona para a rota de login se o usuário não estiver logado
+    try:
+        if session["id"]:  # Verifica se o usuário está logado
+            data = request.form.to_dict()  # Obtém os dados do formulário
+            result = database.tasks.create(user_id=session["id"], task_type=data["task_type"], 
+                                        task_description=data["task_description"], task_date=data["task_date"])  # Cria uma nova tarefa
+            success = result[0]  # Indica se a operação foi bem-sucedida
+            msg = result[1]  # Mensagem de retorno
+            return jsonify({"status": msg, "success": success})  # Retorna um JSON com o status e o sucesso da operação
+    except KeyError:
+        return redirect(url_for("auth.login"))  # Redireciona para a rota de login se o usuário não estiver logado
 
 @tasks_bp.route("/homepage/read-tasks", methods=["GET"])
 def readTasks():
